@@ -1,10 +1,10 @@
 //
 //  AppDelegate.m
-//  iChartApp
+//  
 //
 //  Created by szk on 12-7-13.
 //  Copyright (c) 2012年 __Vinech__. All rights reserved.
-// mm
+// edit on github by hb at 18:29
 #import "AppDelegate.h"
 #import "MarketViewController.h"
 #import "NewsAnalysisViewController.h"
