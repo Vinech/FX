@@ -208,7 +208,7 @@
     view_productdetailheader=[[UIView alloc]initWithFrame:rect_prodcuctdetailheader];
     view_productdetailheader.backgroundColor=[UIColor clearColor];
     if ([array_mark count]==1) {
-        label_headerheader = [[UILabel alloc] initWithFrame:CGRectMake(110, 8, 100, 30)];
+        label_headerheader = [[UILabel alloc] initWithFrame:CGRectMake(110, 0, 100, 30)];
         label_headerheader.text = [array_mark objectAtIndex:0];
         label_headerheader.textAlignment = UITextAlignmentCenter;
         label_headerheader.backgroundColor = [UIColor blackColor];
@@ -226,7 +226,7 @@
     else {
         for (int i = 0; i<[array_mark count]; i++) {
             
-            label_headerheader = [[UILabel alloc] initWithFrame:CGRectMake(0+i*110, 8, 100, 30)];
+            label_headerheader = [[UILabel alloc] initWithFrame:CGRectMake(0+i*110, 0, 100, 30)];
             label_headerheader.text = [array_mark objectAtIndex:i];
             label_headerheader.textAlignment = UITextAlignmentCenter;
             label_headerheader.backgroundColor = [UIColor clearColor];
@@ -332,6 +332,8 @@
             label_productname.textColor=[UIColor whiteColor];
             lable_zhibiao.textColor=[UIColor whiteColor];
             lable_zhibiao.backgroundColor=[UIColor clearColor];
+            cell.backgroundColor=[UIColor colorWithHue:20/255.0f saturation:20/255.0f brightness:20/255.0f alpha:1];
+            
         }else {
             lable_zhibiao.textColor=[UIColor blackColor];
             label_productname.textColor=[UIColor blackColor];
@@ -362,6 +364,8 @@
             if ([string_color isEqualToString:@"dark"]) {
                // lable_zhibiao.textColor=[UIColor whiteColor];
                 lable_zhibiao.backgroundColor=[UIColor clearColor];
+                cell.contentView.backgroundColor=[UIColor colorWithHue:20/255.0f saturation:20/255.0f brightness:20/255.0f alpha:1];
+                cell.backgroundColor=[UIColor colorWithHue:20/255.0f saturation:20/255.0f brightness:20/255.0f alpha:1];
                 
             }else {
                 //lable_zhibiao.textColor=[UIColor blackColor];
@@ -372,6 +376,7 @@
             if ([string_ziduan isEqualToString:@"报价"]) {
                 if ([lable_zhibiao.text floatValue]-[userproduct.last floatValue]<0) {
                     lable_zhibiao.textColor=[UIColor redColor];
+
                 }else {
                     lable_zhibiao.textColor=[UIColor greenColor];
                 }
@@ -420,7 +425,10 @@
                 NSString *dateString = [dateFormat stringFromDate:nd];
                 lable_zhibiao.text=dateString;
                 if ([string_color isEqualToString:@"dark"]) {
-                    lable_zhibiao.backgroundColor=[UIColor blackColor];
+                    lable_zhibiao.backgroundColor=[UIColor colorWithHue:20/255.0f saturation:20/255.0f brightness:20/255.0f alpha:1];
+                    cell.backgroundColor=[UIColor colorWithHue:20/255.0f saturation:20/255.0f brightness:20/255.0f alpha:1];
+                    cell.contentView.backgroundColor=[UIColor colorWithHue:20/255.0f saturation:20/255.0f brightness:20/255.0f alpha:1];
+
                     lable_zhibiao.textColor=[UIColor whiteColor];
                 }else {
                     lable_zhibiao.backgroundColor=[UIColor whiteColor];
@@ -457,6 +465,8 @@
                 if ([string_color isEqualToString:@"dark"]) {
                    // lable_zhibiao.textColor=[UIColor whiteColor];
                     lable_zhibiao.backgroundColor=[UIColor clearColor];
+                    cell.contentView.backgroundColor=[UIColor colorWithHue:20/255.0f saturation:20/255.0f brightness:20/255.0f alpha:1];
+                    cell.backgroundColor=[UIColor colorWithHue:20/255.0f saturation:20/255.0f brightness:20/255.0f alpha:1];
                     
                 }else {
                    // lable_zhibiao.textColor=[UIColor blackColor];
@@ -539,8 +549,11 @@
                     NSString *dateString = [dateFormat stringFromDate:nd];
                     lable_zhibiao.text=dateString;
                     if ([string_color isEqualToString:@"dark"]) {
-                        lable_zhibiao.backgroundColor=[UIColor blackColor];
+                        lable_zhibiao.backgroundColor=[UIColor redColor];
                         lable_zhibiao.textColor=[UIColor whiteColor];
+                        cell.contentView.backgroundColor=[UIColor colorWithHue:20/255.0f saturation:20/255.0f brightness:20/255.0f alpha:1];
+
+                      cell.backgroundColor=  [UIColor colorWithHue:20/255.0f saturation:20/255.0f brightness:20/255.0f alpha:1];
                     }else {
                         lable_zhibiao.backgroundColor=[UIColor whiteColor];
                         lable_zhibiao.textColor=[UIColor blackColor];
@@ -561,13 +574,12 @@
     
     if ([string_color isEqualToString:@"dark"]) {
         
-        
         label_productname.textColor=[UIColor whiteColor];
        // lable_zhibiao.textColor=[UIColor whiteColor];
        lable_zhibiao.backgroundColor=[UIColor clearColor];
-        
+        cell.backgroundColor=[UIColor colorWithHue:20/255.0f saturation:20/255.0f brightness:20/255.0f alpha:1];
+        cell.contentView.backgroundColor=[UIColor colorWithHue:20/255.0f saturation:20/255.0f brightness:20/255.0f alpha:1];
     }else {
-       // lable_zhibiao.textColor=[UIColor blackColor];
         label_productname.textColor=[UIColor blackColor];
        lable_zhibiao.backgroundColor=[UIColor clearColor];
         
@@ -1326,19 +1338,19 @@ texfield_zhuceusername.borderStyle=UITextBorderStyleRoundedRect;
 
     if (interfaceOrientation==UIInterfaceOrientationPortrait||interfaceOrientation==UIInterfaceOrientationPortraitUpsideDown) {
         rect_aview=CGRectMake(0, 0, 320, 480-44-49-17);
-        rect_viewproductnameheader=CGRectMake(0, 0, 100, 40);
-        rect_prodcuctdetailheader=CGRectMake(0, 0, 220, 40);
+        rect_viewproductnameheader=CGRectMake(0, 0, 100, 30);
+        rect_prodcuctdetailheader=CGRectMake(0, 0, 220, 30);
         rect_scrowview_cellsc=CGRectMake(100, 0, 320-100,[array_product count]*44+100);
-        rect_scrowviewheader=CGRectMake(100, 0, 220, 50);
-        rect_scr_total=CGRectMake(0, 40, 320, 480-17-44-49);
+        rect_scrowviewheader=CGRectMake(100, 0, 220, 30);
+        rect_scr_total=CGRectMake(0, 30, 320, 480-17-44-49);
         rect_tableviewproductname=CGRectMake(0, 0, 100, [array_product count]*44+100);
         rect_tableviewproductdetail=CGRectMake(0, 0,[array_ziduan count]*110,[array_product count]*44+100);
         
         aview.frame=CGRectMake(0, 0, 320, 480-44-49-17);
-        view_productnameheader.frame=CGRectMake(0, 0, 100, 50);
-        view_productdetailheader.frame=CGRectMake(0, 0, 220, 50);
+        view_productnameheader.frame=CGRectMake(0, 0, 100, 30);
+        view_productdetailheader.frame=CGRectMake(0, 0, 220, 30);
         scrowview_cellsc.frame=CGRectMake(100, 0, 320-100,[array_product count]*44+100);
-        scrowviewheader.frame=CGRectMake(100, 0, 220, 50);
+        scrowviewheader.frame=CGRectMake(100, 0, 220, 30);
         scr_total.frame=rect_scr_total;
         mytableview_productname.frame=rect_tableviewproductname;
         mytableview_productdetail.frame=rect_tableviewproductdetail;
@@ -1352,11 +1364,11 @@ texfield_zhuceusername.borderStyle=UITextBorderStyleRoundedRect;
     }
     if (interfaceOrientation==UIInterfaceOrientationLandscapeLeft||interfaceOrientation==UIInterfaceOrientationLandscapeRight) {
         rect_aview=CGRectMake(0, 0, 480, 320-44-49-17);
-        rect_viewproductnameheader=CGRectMake(0, 0, 100, 40);
-        rect_prodcuctdetailheader=CGRectMake(0, 0, 370, 40);
-        rect_scrowviewheader=CGRectMake(100, 0, 370, 50);
+        rect_viewproductnameheader=CGRectMake(0, 0, 100, 30);
+        rect_prodcuctdetailheader=CGRectMake(0, 0, 370, 30);
+        rect_scrowviewheader=CGRectMake(100, 0, 370, 30);
         rect_scrowview_cellsc=CGRectMake(100, 0, 480-100, [array_product count]*44+100);
-        rect_scr_total=CGRectMake(0, 40, 480, 320-17-44-49);
+        rect_scr_total=CGRectMake(0, 30, 480, 320-17-44-49);
         rect_tableviewproductname=CGRectMake(0, 0, 100, [array_product count]*44+100);
         rect_tableviewproductdetail=CGRectMake(0, 0, [array_ziduan count]*110,[array_product count]*44+100);
         

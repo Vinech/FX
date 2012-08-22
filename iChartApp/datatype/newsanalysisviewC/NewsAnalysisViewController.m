@@ -353,7 +353,7 @@
     
     cell.contentView.backgroundColor = [UIColor clearColor];
     if ([style isEqualToString:@"dark"]) {
-        cell.backgroundColor = [UIColor blackColor];
+        cell.backgroundColor = [UIColor colorWithRed:20/225.0f green:20/225.0f blue:20/225.0f alpha:1];
         labletext.textColor = [UIColor whiteColor];
         label_SourceandTime.textColor=[UIColor brownColor];
         

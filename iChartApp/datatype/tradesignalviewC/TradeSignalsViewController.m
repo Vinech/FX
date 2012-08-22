@@ -274,6 +274,7 @@
         cell.label5.textColor=[UIColor whiteColor];
         cell.label6.textColor=[UIColor whiteColor];
         cell.label7.textColor=[UIColor whiteColor];
+        cell.backgroundColor=[UIColor colorWithRed:20/255.0f green:20/255.0f blue:20/255.0f alpha:1];
         
     }
     else {

@@ -202,6 +202,7 @@
     UIBarButtonItem *segButton = [[UIBarButtonItem alloc] initWithCustomView:segmentC];
     self.navigationItem.rightBarButtonItem =segButton;
     
+    
     if (label.text!=nil) {
         [label removeFromSuperview];
     }
@@ -212,6 +213,9 @@
     label.font = [UIFont fontWithName:@"HiraKakuProN-W6" size:20];
     label.backgroundColor = [UIColor clearColor];
     [backgroundViews addSubview:label];
+    
+    self.navigationItem.title=label.text;
+
     
     Personaldetail *userproduct=[[Personaldetail alloc]init];
     userproduct = [Personaldetail findpersonaldetailwithproductname:label.text];

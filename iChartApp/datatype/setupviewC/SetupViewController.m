@@ -345,12 +345,12 @@
             //            cell.textLabel.textColor = [UIColor whiteColor];
             //            cell.textLabel.text = [[array2 objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
             cell.textLabel.textAlignment = UITextAlignmentLeft;
-            
+          //  cell.backgroundColor = [UIColor colorWithRed:20/225.0f green:20/225.0f blue:20/225.0f alpha:1];
             cell.textLabel.textColor = [UIColor whiteColor];
             cell.textLabel.text = [[array2 objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
             cell.contentView.backgroundColor = [UIColor blackColor];
             cell.contentView.layer.cornerRadius = 9;
-            cell.backgroundColor = [UIColor clearColor];
+            cell.backgroundColor=[UIColor clearColor];
 //            switch1.backgroundColor=[UIColor blackColor];
 //            switch2.backgroundColor=[UIColor blackColor];
             

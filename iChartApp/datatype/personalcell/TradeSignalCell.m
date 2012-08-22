@@ -19,7 +19,7 @@
     
     
     UILabel * label = [[UILabel alloc] initWithFrame:frame];
-    label.backgroundColor = backgroundColor;
+    label.backgroundColor = [UIColor clearColor];
     label.tag = tag;
     label.textAlignment = UITextAlignmentCenter;
 //    if (string==nil) {
