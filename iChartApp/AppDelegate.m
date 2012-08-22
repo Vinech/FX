@@ -4,7 +4,7 @@
 //
 //  Created by szk on 12-7-13.
 //  Copyright (c) 2012年 __Vinech__. All rights reserved.
-// 
+// mm
 #import "AppDelegate.h"
 #import "MarketViewController.h"
 #import "NewsAnalysisViewController.h"
