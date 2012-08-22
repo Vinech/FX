@@ -4,7 +4,7 @@
 //
 //  Created by bin huang on 12-7-12.
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
-//sssiis是
+//sssiis是h
 
 #import "NewsAnalysisViewController.h"
 #import "StoryViewController.h"
