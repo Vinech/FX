@@ -1089,7 +1089,7 @@
     
     //column
     model = [[ColumnChartModel alloc] init];    
-    //    [self addModel:model withName:@"column"];
+    [self addModel:model withName:@"column"];
     
     //candle
     model = [[CandleChartModel alloc] init];

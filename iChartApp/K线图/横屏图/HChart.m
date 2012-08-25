@@ -920,6 +920,9 @@
         {
             
             
+            [self.delegate HChooseIndexes];            
+            
+            
             
             
             UIImageView *imageV = (UIImageView *)[self viewWithTag:66];
@@ -1085,7 +1088,7 @@
     
     //column
     model = [[HColumnChartModel alloc] init];    
-    //  [self addModel:model withName:@"column"];
+    [self addModel:model withName:@"column"];
     
     //candle
     model = [[HCandleChartModel alloc] init];

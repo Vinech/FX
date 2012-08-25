@@ -13,6 +13,7 @@
 
 @protocol HChartDelegate <NSObject>
 - (void)HtimerTitle:(int )title;
+- (void)HChooseIndexes;
 @end
 
 #import <UIKit/UIKit.h>

@@ -92,6 +92,8 @@
 		85BF8CA715AFC7220081D2EA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 85BF8CA515AFC7220081D2EA /* InfoPlist.strings */; };
 		85BF8CA915AFC7220081D2EA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 85BF8CA815AFC7220081D2EA /* main.m */; };
 		85BF8CAD15AFC7220081D2EA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 85BF8CAC15AFC7220081D2EA /* AppDelegate.m */; };
+		85CDD5A115E736CB006581DD /* readdata.m in Sources */ = {isa = PBXBuildFile; fileRef = 85CDD5A015E736CB006581DD /* readdata.m */; };
+		85CDD5A415E76AE1006581DD /* eightbyte.m in Sources */ = {isa = PBXBuildFile; fileRef = 85CDD5A315E76AE1006581DD /* eightbyte.m */; };
 		85D0E07E15DB79AF00013B65 /* 交易信号.png in Resources */ = {isa = PBXBuildFile; fileRef = 85D0E07B15DB79AF00013B65 /* 交易信号.png */; };
 		85D0E07F15DB79AF00013B65 /* 设置.png in Resources */ = {isa = PBXBuildFile; fileRef = 85D0E07C15DB79AF00013B65 /* 设置.png */; };
 		85D0E08015DB79AF00013B65 /* 新闻与分析.png in Resources */ = {isa = PBXBuildFile; fileRef = 85D0E07D15DB79AF00013B65 /* 新闻与分析.png */; };
@@ -307,6 +309,10 @@
 		85BF8CAA15AFC7220081D2EA /* iChartApp-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iChartApp-Prefix.pch"; sourceTree = "<group>"; };
 		85BF8CAB15AFC7220081D2EA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		85BF8CAC15AFC7220081D2EA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		85CDD59F15E736CB006581DD /* readdata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = readdata.h; sourceTree = "<group>"; };
+		85CDD5A015E736CB006581DD /* readdata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = readdata.m; sourceTree = "<group>"; };
+		85CDD5A215E76AE1006581DD /* eightbyte.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = eightbyte.h; sourceTree = "<group>"; };
+		85CDD5A315E76AE1006581DD /* eightbyte.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = eightbyte.m; sourceTree = "<group>"; };
 		85D0E07B15DB79AF00013B65 /* 交易信号.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "交易信号.png"; sourceTree = "<group>"; };
 		85D0E07C15DB79AF00013B65 /* 设置.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "设置.png"; sourceTree = "<group>"; };
 		85D0E07D15DB79AF00013B65 /* 新闻与分析.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "新闻与分析.png"; sourceTree = "<group>"; };
@@ -512,6 +518,7 @@
 		8516AE5715C7C97800D92045 /* 第三方类 */ = {
 			isa = PBXGroup;
 			children = (
+				85CDD59D15E7369A006581DD /* data转化 */,
 				85858DF815E4D8120054823E /* PersonalSegment */,
 				8516AE5815C7C97800D92045 /* ASIHTTPRequest */,
 				8516AE6F15C7C97800D92045 /* AsyncImage */,
@@ -799,6 +806,17 @@
 				8569E1F615B00804009FFFF9 /* setupviewC */,
 			);
 			path = datatype;
+			sourceTree = "<group>";
+		};
+		85CDD59D15E7369A006581DD /* data转化 */ = {
+			isa = PBXGroup;
+			children = (
+				85CDD59F15E736CB006581DD /* readdata.h */,
+				85CDD5A015E736CB006581DD /* readdata.m */,
+				85CDD5A215E76AE1006581DD /* eightbyte.h */,
+				85CDD5A315E76AE1006581DD /* eightbyte.m */,
+			);
+			path = "data转化";
 			sourceTree = "<group>";
 		};
 		85DB53A815DE2C0A005EE1CD /* DateHelper */ = {
@@ -1148,6 +1166,8 @@
 				85DB53AD15DE2C0A005EE1CD /* DateHelper.m in Sources */,
 				85DB53AE15DE2C0A005EE1CD /* NewsSearchViewController.m in Sources */,
 				85858DFB15E4D8120054823E /* STSegmentedControl.m in Sources */,
+				85CDD5A115E736CB006581DD /* readdata.m in Sources */,
+				85CDD5A415E76AE1006581DD /* eightbyte.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -15,7 +15,7 @@
 #import "CandleViewController.h"
 #import "ProductSelectViewController.h"
 #import "FileSelectViewController.h"
-
+#import "eightbyte.h"
 @interface MarketViewController (){
     NSMutableArray * array_quanbuziduan;//所有的字段
     NSMutableArray *array_quanbuproductname;//所有的产品的名字
@@ -24,6 +24,7 @@
     NSMutableArray *array_product;//用来接收产品的名字
     NSMutableArray *array_chanpin;//用来判断当前的产品
     NSArray *array1000;//没有实际意义
+    NSString *string_bianhuanhengshuping;
     
     data2 *_data2;
     data *data1;
@@ -35,6 +36,7 @@
 
 @implementation MarketViewController
 @synthesize biaozhiwei,stringhost,sessionid,captchas,stringport,signin;
+@synthesize self_view_frame_size_width;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -49,21 +51,26 @@
 {
     //字段
     NSLog(@"111111");
-   // [self shouldAutorotateToInterfaceOrientation:UIInterfaceOrientationPortrait|UIInterfaceOrientationPortraitUpsideDown|UIInterfaceOrientationLandscapeLeft|UIInterfaceOrientationLandscapeRight];
-   // [self performSelector:@selector(shouldAutorotateToInterfaceOrientation:)];
+    // [self shouldAutorotateToInterfaceOrientation:UIInterfaceOrientationPortrait|UIInterfaceOrientationPortraitUpsideDown|UIInterfaceOrientationLandscapeLeft|UIInterfaceOrientationLandscapeRight];
+    // [self performSelector:@selector(shouldAutorotateToInterfaceOrientation:)];
     //[alertviewdenglujieguo show];
     if (alertview_denglu==nil) {
         alertview_denglu=[[UIAlertView alloc]initWithTitle:@"iChartID Password" message:nil delegate:self cancelButtonTitle:@"注册" otherButtonTitles:@"登陆", nil];
     }
     if (signin==0) {
-       [alertview_denglu show];
+        [alertview_denglu show];
         signin=1;
-
+        
     }
     
     NSUserDefaults * user=[NSUserDefaults standardUserDefaults];
     array_ziduan=[user objectForKey:@"ziduan"];
     string_yanse=[user objectForKey:@"style"];
+    string_bianhuanhengshuping=[user objectForKey:@"480"];
+    
+    self.self_view_frame_size_width = [string_bianhuanhengshuping intValue];
+    
+    NSLog(@"self.self_view_frame_size_width = %d",self.self_view_frame_size_width);
     
     //产品
     NSUserDefaults *user_forex=[NSUserDefaults standardUserDefaults];
@@ -83,11 +90,11 @@
             break;
     }
     
-        //aview=[[UIView alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    //aview=[[UIView alloc]initWithFrame:[UIScreen mainScreen].bounds];
     aview.frame=[UIScreen mainScreen].bounds;
-        NSLog(@"aview.frame.size.height=%f",aview.frame.size.height);
-     
-      NSLog(@"waihui=======%@",array_product);
+    NSLog(@"aview.frame.size.height=%f",aview.frame.size.height);
+    
+    NSLog(@"waihui=======%@",array_product);
     if (array_chanpin!=array_product||array_mark!=array_ziduan||[string_yanse isEqualToString:string_color]==NO) 
     {
         [self viewDidLoad];
@@ -102,6 +109,7 @@
 - (void)viewDidLoad
 {     [super viewDidLoad];
     
+    NSLog(@"asdfghjklasdfghjklsdfghjklzxcvbnm,wertyuiodfghjk");
     //判断如果字段为空的话就等于全部的字段
     if (array_quanbuziduan==nil) {
         array_quanbuziduan = [[NSMutableArray alloc]initWithObjects:@"报价",@"开盘",@"最高",@"最低",@"涨跌",@"更新",nil];
@@ -145,7 +153,7 @@
     view_rightheader.backgroundColor=[UIColor clearColor];
     [view_rightheader addSubview:segmentC];
     self.navigationItem.titleView=view_rightheader;
-
+    
     
     UIBarButtonItem * setupbtn = [[UIBarButtonItem alloc] initWithTitle:@"设置" style:UIBarButtonItemStyleDone target:self action:@selector(setup)];
     self.navigationItem.rightBarButtonItem = setupbtn;
@@ -155,9 +163,9 @@
     button_logo.multipleTouchEnabled=NO;//不可触摸
     button_logo.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"3730.png"]];
     //  button_logo.backgroundColor=[UIColor yellowColor];
-   UIBarButtonItem* buttonleft=[[UIBarButtonItem alloc]initWithCustomView:button_logo];
+    UIBarButtonItem* buttonleft=[[UIBarButtonItem alloc]initWithCustomView:button_logo];
     self.navigationItem.leftBarButtonItem=buttonleft;
-
+    
     
     self.view.frame=[UIScreen mainScreen].bounds;
     aview=[[UIView alloc]initWithFrame:rect_aview];
@@ -168,17 +176,22 @@
     mytableview_productname.dataSource=self;
     
     mytableview_productdetail=[[UITableView alloc]initWithFrame:CGRectMake(0, 0,[array_ziduan count]*110,[array_product count]*44+100)
- style:UITableViewStylePlain];
+                                                          style:UITableViewStylePlain];
     mytableview_productdetail.delegate=self;
     mytableview_productdetail.dataSource=self;
     
     scrowview_cellsc=[[UIScrollView alloc]init];
-    if (self.view.frame.size.height==480) {
-        NSLog(@"竖屏");
-        scrowview_cellsc.frame=CGRectMake(100, 0, 320-100,[array_product count]*44+100);
+    NSLog(@"self.self_view_frame_size_width - 1 = %d",self.self_view_frame_size_width);
+    if (self.view.frame.size.width==self.self_view_frame_size_width) {
+        if (self.self_view_frame_size_width == 480) {
+            scrowview_cellsc.frame=CGRectMake(100, 0, 480-100, [array_product count]*44+100);
+        }else {
+            scrowview_cellsc.frame=CGRectMake(100, 0, 320-100,[array_product count]*44+100);
+            NSLog(@"竖屏");
+        }
     }else {
         scrowview_cellsc.frame=CGRectMake(100, 0, 480-100, [array_product count]*44+100);
-
+        
     }
     scrowview_cellsc.backgroundColor=[UIColor clearColor];
     [scrowview_cellsc addSubview:mytableview_productdetail];
@@ -186,8 +199,8 @@
     scrowview_cellsc.bounces = NO;
     scrowview_cellsc.showsVerticalScrollIndicator=NO;
     scrowview_cellsc.showsHorizontalScrollIndicator=NO;
-    
-   // mytableview_productname.backgroundColor=[UIColor colorWithRed:20/255.0f green:20/255.0f blue:20/255.0f alpha:1.0f];
+    scrowview_cellsc.contentSize = CGSizeMake([array_mark count]*110, 0);
+    // mytableview_productname.backgroundColor=[UIColor colorWithRed:20/255.0f green:20/255.0f blue:20/255.0f alpha:1.0f];
     //mytableview_productdetail.backgroundColor=[UIColor colorWithRed:20/255.0f green:20/255.0f blue:20/255.0f alpha:1.0f];
     mytableview_productname.userInteractionEnabled=YES;
     mytableview_productdetail.userInteractionEnabled=YES;
@@ -290,12 +303,12 @@
         label_nameheader.textColor=[UIColor blackColor];
         
     }
-   //**************************登陆 *****注册************
-
-
+    //**************************登陆 *****注册************
     
     
-  //  [self lianjie];
+    
+    
+    //  [self lianjie];
     
 }
 #pragma mark - TableView Datasource
@@ -320,7 +333,7 @@
     
     if (tableView==mytableview_productname) {
         NSLog(@"rect_tableviewproductname.size.height=%f",rect_tableviewproductname.size.height);
-
+        
         NSLog(@"%f",cell.contentView.frame.size.height);
         label_productname=[[UILabel alloc]initWithFrame:CGRectMake(0, 2, 90, 40)];
         label_productname.text=[array_chanpin objectAtIndex:indexPath.row];
@@ -354,7 +367,7 @@
         if ([array_mark count]==1) {
             
             scrowview_cellsc.contentSize=CGSizeMake(0,30);
-           // mytableview_productdetail.frame=rect_tableviewproductdetail;
+            // mytableview_productdetail.frame=rect_tableviewproductdetail;
             NSLog(@"==%d",[array_mark count]);
             lable_zhibiao=[[UILabel alloc]initWithFrame:CGRectMake(110, 2, 100, 40)];
             
@@ -362,7 +375,7 @@
             
             NSString *string_ziduan=[array_mark objectAtIndex:0];
             if ([string_color isEqualToString:@"dark"]) {
-               // lable_zhibiao.textColor=[UIColor whiteColor];
+                // lable_zhibiao.textColor=[UIColor whiteColor];
                 lable_zhibiao.backgroundColor=[UIColor clearColor];
                 cell.contentView.backgroundColor=[UIColor colorWithHue:20/255.0f saturation:20/255.0f brightness:20/255.0f alpha:1];
                 cell.backgroundColor=[UIColor colorWithHue:20/255.0f saturation:20/255.0f brightness:20/255.0f alpha:1];
@@ -376,7 +389,7 @@
             if ([string_ziduan isEqualToString:@"报价"]) {
                 if ([lable_zhibiao.text floatValue]-[userproduct.last floatValue]<0) {
                     lable_zhibiao.textColor=[UIColor redColor];
-
+                    
                 }else {
                     lable_zhibiao.textColor=[UIColor greenColor];
                 }
@@ -391,7 +404,7 @@
                 }
                 
             }
-
+            
             if ([string_ziduan isEqualToString:@"最高"]) {
                 if ([lable_zhibiao.text floatValue]-[userproduct.high floatValue]<0) {
                     lable_zhibiao.textColor=[UIColor redColor];
@@ -428,7 +441,7 @@
                     lable_zhibiao.backgroundColor=[UIColor colorWithHue:20/255.0f saturation:20/255.0f brightness:20/255.0f alpha:1];
                     cell.backgroundColor=[UIColor colorWithHue:20/255.0f saturation:20/255.0f brightness:20/255.0f alpha:1];
                     cell.contentView.backgroundColor=[UIColor colorWithHue:20/255.0f saturation:20/255.0f brightness:20/255.0f alpha:1];
-
+                    
                     lable_zhibiao.textColor=[UIColor whiteColor];
                 }else {
                     lable_zhibiao.backgroundColor=[UIColor whiteColor];
@@ -442,34 +455,42 @@
         
         else {
             NSLog(@"wocaokengdie=%d",[array_chanpin count]);
-//            scrowview_cellsc.frame=rect_scrowview_cellsc;
-            scrowview_cellsc.contentSize=CGSizeMake(([array_mark count])*110, 0);
-           // NSLog(@"rect_tableviewproductname.size.height=%f",rect_tableviewproductname.size.height);
-         mytableview_productdetail.frame=CGRectMake(0, 0, 140*[array_mark count],[array_chanpin count]*44+100);
+            //            scrowview_cellsc.frame=rect_scrowview_cellsc;
+            //            scrowview_cellsc.contentSize=CGSizeMake(([array_mark count])*110, 0);
+            // NSLog(@"rect_tableviewproductname.size.height=%f",rect_tableviewproductname.size.height);
+            mytableview_productdetail.frame=CGRectMake(0, 0, 140*[array_mark count],[array_chanpin count]*44+100);
             
             scrowview_cellsc.frame=CGRectMake(100, 0, 220, [array_chanpin count]*44+100);
-            NSLog(@"mytableview_productdetail.frame.size.height=%f",mytableview_productdetail.frame.size.height);
-            if (self.view.frame.size.height==480) {
-                scrowview_cellsc.frame=CGRectMake(100, 0, 320-100,[array_product count]*44+100);
+            NSLog(@"self.self_view_frame_size_width - 2= %d",self.self_view_frame_size_width);
+            if (self.view.frame.size.width == self.self_view_frame_size_width) {
+                if (self.self_view_frame_size_width == 480) {
+                    scrowview_cellsc.frame=CGRectMake(100, 0, 480-100, [array_product count]*44+100);
+                    NSLog(@"ElseElseElseElseElseElseElseElseElseElseElse");
+                    
+                }else {
+                    scrowview_cellsc.frame=CGRectMake(100, 0, 320-100,[array_product count]*44+100);
+                    NSLog(@"ififififififififififififififiiffiiffifififii");
+                }
+                
             }else {
                 scrowview_cellsc.frame=CGRectMake(100, 0, 480-100, [array_product count]*44+100);
-                
+                NSLog(@"ElseElseElseElseElseElseElseElseElseElseElse");
             }
-
-
+            
+            
             for (int i=0; i<[array_mark count]; i++) {
                 NSLog(@"==%d",[array_mark count]);
                 lable_zhibiao=[[UILabel alloc]initWithFrame:CGRectMake(110*i, 2, 100, 40)];
                 lable_zhibiao.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:17];
                 
                 if ([string_color isEqualToString:@"dark"]) {
-                   // lable_zhibiao.textColor=[UIColor whiteColor];
+                    // lable_zhibiao.textColor=[UIColor whiteColor];
                     lable_zhibiao.backgroundColor=[UIColor clearColor];
                     cell.contentView.backgroundColor=[UIColor colorWithHue:20/255.0f saturation:20/255.0f brightness:20/255.0f alpha:1];
                     cell.backgroundColor=[UIColor colorWithHue:20/255.0f saturation:20/255.0f brightness:20/255.0f alpha:1];
                     
                 }else {
-                   // lable_zhibiao.textColor=[UIColor blackColor];
+                    // lable_zhibiao.textColor=[UIColor blackColor];
                     lable_zhibiao.backgroundColor=[UIColor clearColor];
                     
                 }
@@ -486,7 +507,7 @@
                         }else {
                             lable_zhibiao.textColor=[UIColor greenColor];
                         }
-
+                        
                         lable_zhibiao.text= userproduct.last;
                     }
                 }
@@ -504,7 +525,7 @@
                         lable_zhibiao.text= userproduct.open;
                     }
                 }
-
+                
                 if ([string_ziduan isEqualToString:@"最高"]) {
                     if (userproduct.high == nil) {
                         lable_zhibiao.text = @"N/A";
@@ -514,7 +535,7 @@
                         }else {
                             lable_zhibiao.textColor=[UIColor greenColor];
                         }
-
+                        
                         lable_zhibiao.text= userproduct.high;
                     }               
                 }
@@ -527,7 +548,7 @@
                         }else {
                             lable_zhibiao.textColor=[UIColor greenColor];
                         }
-
+                        
                         lable_zhibiao.text= userproduct.low;
                     }               
                 }
@@ -537,7 +558,7 @@
                     }else {
                         lable_zhibiao.textColor=[UIColor greenColor];
                     }
-
+                    
                     lable_zhibiao.text=[NSString stringWithFormat:@"     %.2f%%",[userproduct.volume floatValue]];
                     
                 }
@@ -552,13 +573,13 @@
                         lable_zhibiao.backgroundColor=[UIColor redColor];
                         lable_zhibiao.textColor=[UIColor whiteColor];
                         cell.contentView.backgroundColor=[UIColor colorWithHue:20/255.0f saturation:20/255.0f brightness:20/255.0f alpha:1];
-
-                      cell.backgroundColor=  [UIColor colorWithHue:20/255.0f saturation:20/255.0f brightness:20/255.0f alpha:1];
+                        
+                        cell.backgroundColor=  [UIColor colorWithHue:20/255.0f saturation:20/255.0f brightness:20/255.0f alpha:1];
                     }else {
                         lable_zhibiao.backgroundColor=[UIColor whiteColor];
                         lable_zhibiao.textColor=[UIColor blackColor];
                     }
-
+                    
                 }
                 
                 
@@ -575,13 +596,13 @@
     if ([string_color isEqualToString:@"dark"]) {
         
         label_productname.textColor=[UIColor whiteColor];
-       // lable_zhibiao.textColor=[UIColor whiteColor];
-       lable_zhibiao.backgroundColor=[UIColor clearColor];
+        // lable_zhibiao.textColor=[UIColor whiteColor];
+        lable_zhibiao.backgroundColor=[UIColor clearColor];
         cell.backgroundColor=[UIColor colorWithHue:20/255.0f saturation:20/255.0f brightness:20/255.0f alpha:1];
         cell.contentView.backgroundColor=[UIColor colorWithHue:20/255.0f saturation:20/255.0f brightness:20/255.0f alpha:1];
     }else {
         label_productname.textColor=[UIColor blackColor];
-       lable_zhibiao.backgroundColor=[UIColor clearColor];
+        lable_zhibiao.backgroundColor=[UIColor clearColor];
         
     }
     
@@ -681,9 +702,9 @@
         textfield_denglumin.text=[user_qushu objectForKey:@"min"];
         textfield_denglumin.borderStyle=UITextBorderStyleRoundedRect;
         [alertView addSubview:textfield_denglumin ];
-     //  [SFHFKeychainUtils storeUsername:@"dd" andPassword:@"aa"forServiceName:SERVICE_NAME updateExisting:1 error:nil];
-      //  [SFHFKeychainUtils storeUsername:textfield_dengluusername.text andPassword:textfield_denglumin.text forServiceName:@"iChartApp" updateExisting:1 error:nil];
-     //   textfield_denglumin.text=[SFHFKeychainUtils getPasswordForUsername:textfield_dengluusername.text andServiceName:@"iChartApp" error:nil];
+        //  [SFHFKeychainUtils storeUsername:@"dd" andPassword:@"aa"forServiceName:SERVICE_NAME updateExisting:1 error:nil];
+        //  [SFHFKeychainUtils storeUsername:textfield_dengluusername.text andPassword:textfield_denglumin.text forServiceName:@"iChartApp" updateExisting:1 error:nil];
+        //   textfield_denglumin.text=[SFHFKeychainUtils getPasswordForUsername:textfield_dengluusername.text andServiceName:@"iChartApp" error:nil];
     }
     
     if (alertView==alertview_zhuce) {
@@ -709,11 +730,11 @@
             }
         }
         
-texfield_zhuceusername=[[UITextField alloc]initWithFrame:CGRectMake( 45, 40,190, 25 )];
-texfield_zhuceusername.placeholder=@"用户名";
+        texfield_zhuceusername=[[UITextField alloc]initWithFrame:CGRectMake( 45, 40,190, 25 )];
+        texfield_zhuceusername.placeholder=@"用户名";
         texfield_zhuceusername.delegate = self;
-texfield_zhuceusername.borderStyle=UITextBorderStyleRoundedRect;
-[alertview_zhuce addSubview:texfield_zhuceusername ];
+        texfield_zhuceusername.borderStyle=UITextBorderStyleRoundedRect;
+        [alertview_zhuce addSubview:texfield_zhuceusername ];
         
         textfield_zhucemin=[[UITextField alloc]initWithFrame:CGRectMake( 45, 70,190, 25 )];
         textfield_zhucemin.placeholder=@"密码";
@@ -741,11 +762,11 @@ texfield_zhuceusername.borderStyle=UITextBorderStyleRoundedRect;
         textfield_zhucephonenumber.borderStyle=UITextBorderStyleRoundedRect;
         [alertview_zhuce addSubview:textfield_zhucephonenumber ];
         
-
         
-
-
-
+        
+        
+        
+        
     }
     
 }
@@ -768,7 +789,7 @@ texfield_zhuceusername.borderStyle=UITextBorderStyleRoundedRect;
             NSLog(@"denglu");
             [self denglu];
         }
-
+        
     }
     if (alertView==alertview_zhuce) {
         if (buttonIndex==0) {
@@ -782,29 +803,29 @@ texfield_zhuceusername.borderStyle=UITextBorderStyleRoundedRect;
     }
     if (alertView==alertviewdenglujieguo) {
         signin=0;
-       
-            [alertview_denglu show];
-            NSLog(@"wocao!!!caocao");
+        
+        [alertview_denglu show];
+        NSLog(@"wocao!!!caocao");
         if (buttonIndex==0) {
             NSLog(@"wocao");
         }
         else {
             NSLog(@"wori");
         }
-
-
+        
+        
     }
     if (alertView==alertviewzhucejieguo) {
-       
-            [alertview_denglu show];
-
-       
-
-
-       // [self viewWillAppear:YES];
-
+        
+        [alertview_denglu show];
+        
+        
+        
+        
+        // [self viewWillAppear:YES];
+        
     }
-  }
+}
 
 #pragma mark-socket连接
 -(void)lianjie{
@@ -829,10 +850,10 @@ texfield_zhuceusername.borderStyle=UITextBorderStyleRoundedRect;
 #pragma mark--注册
 -(void)zhuce{
     NSLog(@"zhuce");
-
+    
     alertview_zhuce=[[UIAlertView alloc]initWithTitle:@"注册" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"注册", nil];
     [alertview_zhuce show];
-
+    
 }
 -(void)zhucexieru{
     NSLog(@"zoulezhucexieru");
@@ -854,7 +875,7 @@ texfield_zhuceusername.borderStyle=UITextBorderStyleRoundedRect;
     [user_nameandmin setObject:textfield_dengluusername.text forKey:@"name"];
     [user_nameandmin setObject:textfield_denglumin.text forKey:@"min"];
     [user_nameandmin synchronize];
-
+    
     
     if (data1==nil) {
         data1=[[data alloc]init];
@@ -863,7 +884,7 @@ texfield_zhuceusername.borderStyle=UITextBorderStyleRoundedRect;
         socket_denglu=[[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
     }
     NSError *err=nil;
-    if(![socket_denglu connectToHost:@"222.73.211.226" onPort:25010 error:&err]) 
+    if(![socket_denglu connectToHost:@"222.73.211.226" onPort:26010 error:&err]) 
     { 
         NSLog(@"连接出错");
     }else
@@ -875,21 +896,20 @@ texfield_zhuceusername.borderStyle=UITextBorderStyleRoundedRect;
 #pragma mark-socket写入数据
 -(void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port
 {
-
+    
     NSLog(@"socket写入数据");
     if (sock==socket_zhuce) {
         NSLog(@"zoulezhuce de delegate");
         
-        NSString *string_l=[NSString stringWithFormat:@"PressTest1\\PressTest1\\PressTest1@126.com\\13818781911"];
-        
+        NSString *string_l=[NSString stringWithFormat:@"\\%@\\%@\\%@\\%@",texfield_zhuceusername.text,textfield_zhucemin.text,textfileld_zhuceemail.text,textfield_zhucephonenumber.text];
         
         short length_zhuce=string_l.length*2;
         int8_t ch[2];
         ch[0] = (length_zhuce & 0x0ff00)>>8;  
         ch[1] = (length_zhuce & 0x0ff);  
-    
-
-      //  NSLog(@"=====%d",sizeof(length_zhuce));
+        
+        
+        //  NSLog(@"=====%d",sizeof(length_zhuce));
         short type=1106;
         int8_t mm[2];
         mm[0] = (type & 0x0ff00)>>8;  
@@ -897,65 +917,82 @@ texfield_zhuceusername.borderStyle=UITextBorderStyleRoundedRect;
         
         
         int zero=0;
-     //   NSData *data_length=[NSData da];
+        //   NSData *data_length=[NSData da];
         NSMutableData *alldata=[[NSMutableData alloc]init];
         
-       NSData * zeroData = [NSData dataWithBytes:&zero length:4];
+        NSData * zeroData = [NSData dataWithBytes:&zero length:4];
         NSData *data=[string_l dataUsingEncoding:NSUTF16BigEndianStringEncoding];
-
+        
         [alldata appendBytes:ch length:2];
         [alldata appendBytes:mm length:2];
-      [alldata appendData:zeroData];
-
+        [alldata appendData:zeroData];
+        
         [alldata appendData:data];
         NSData *requestData = [[NSMutableData alloc]init];
         requestData=alldata;
         
         [socket_zhuce writeData:requestData withTimeout:1000 tag:0];
         
-        
-
+        NSData *testdata=[[NSData alloc]init];
+       // eightbyte *yaoxi=[[eightbyte alloc]init];
+       testdata= [eightbyte shengchengdata:string_l type:type];
+        NSLog(@"testdata===%@",testdata);
         NSLog(@"zhucedata===%@",requestData);
-
+        
         
         
         NSData * separator = [@"\\" dataUsingEncoding:NSUTF16BigEndianStringEncoding];
         NSLog(@"separtor====%@",separator);
         
-       // [socket_zhuce readDataToData:separator withTimeout:1000 tag:1];
-//        for (int i=0; i<3; i++) {
-//            [socket_zhuce readDataWithTimeout:1000 tag:i+1];
-//        }
-       [socket_zhuce readDataToLength:2 withTimeout:1000 tag:1];
+        // [socket_zhuce readDataToData:separator withTimeout:1000 tag:1];
+              // for (int i=0; i<4; i++) {
+            //       [socket_zhuce readDataWithTimeout:1000 tag:i+1];
+            //  }
+        [socket_zhuce readDataToLength:2 withTimeout:1000 tag:1];
         [socket_zhuce readDataToLength:2 withTimeout:1000 tag:2];
-       [socket_zhuce readDataToLength:4 withTimeout:1000 tag:3];
+        [socket_zhuce readDataToLength:4 withTimeout:1000 tag:3];
         [socket_zhuce readDataWithTimeout:1000 tag:4];
-
+        
     }
     
     if (sock==socket_denglu) {
         NSLog(@"进入了登陆的方法");
         NSString *request_l=[NSString stringWithFormat:@"%@\\%@",textfield_dengluusername.text,textfield_denglumin.text];
-        NSString *request=[NSString stringWithFormat:@"%d11010\\%@",request_l.length*2,request_l];
-        NSData *requestData = [request dataUsingEncoding:NSUTF16BigEndianStringEncoding];
-        [socket_denglu writeData:requestData withTimeout:1000 tag:0];
+        NSLog(@"%d",request_l.length);
         
+        NSData *requestData1=[[NSData alloc]init];
+        requestData1=[eightbyte shengchengdata:request_l type:1101];
+        [socket_denglu writeData:requestData1 withTimeout:1000 tag:0];
         
-        
+        [socket_denglu readDataToLength:2 withTimeout:1000 tag:1];
+        [socket_denglu readDataToLength:2 withTimeout:1000 tag:2];
+        [socket_denglu readDataToLength:4 withTimeout:1000 tag:3];
+ //      [socket_denglu readDataToLength:2 withTimeout:1000 tag:4];
+//        [socket_denglu readDataToLength:4 withTimeout:1000 tag:5];
+      //  [socket_denglu readDataWithTimeout:1000 tag:4];
         NSData * separator = [@"\\" dataUsingEncoding:NSUTF16BigEndianStringEncoding];
-        NSLog(@"separtor====%@",separator);
-        for (int i=0; i<7; i++) {
-            if (i<6) {
-                [socket_denglu readDataToData:separator withTimeout:1000 tag:i];
-                NSLog(@"%d....",i);
-            }
-            if (i==6) {
-                [socket_denglu readDataWithTimeout:1000 tag:6];
-                NSLog(@"%d....",i);
-                
-            }
-        }
+        
+         for (int i=0; i<4; i++) {
+             [socket_denglu readDataToData:separator withTimeout:1000 tag:i+4];
 
+       }
+        
+
+        
+       // NSData * separator = [@"\\" dataUsingEncoding:NSUTF16BigEndianStringEncoding];
+        
+        NSLog(@"requestdata====%@",requestData1);
+//        for (int i=0; i<7; i++) {
+//            if (i<6) {
+//                [socket_denglu readDataToData:separator withTimeout:1000 tag:i];
+//                NSLog(@"%d....",i);
+//            }
+//            if (i==6) {
+//                [socket_denglu readDataWithTimeout:1000 tag:6];
+//                NSLog(@"%d....",i);
+//                
+//            }
+//        }
     }
     
     if (sock==socket1)
@@ -985,9 +1022,14 @@ texfield_zhuceusername.borderStyle=UITextBorderStyleRoundedRect;
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
 {
     NSLog(@"socket连接error");
-  //  sleep(30);
+    //  sleep(30);
     // [self lianjie];
 }
+#pragma mark--data的转化
+//-(int32_t)read{
+//    int8_t v;
+//    
+//}
 #pragma mark-socket读出数据
 
 -(void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
@@ -995,173 +1037,226 @@ texfield_zhuceusername.borderStyle=UITextBorderStyleRoundedRect;
     if (sock==socket_zhuce) {
         NSLog(@"socket_zhuce读取数据%@",data);
         //NSStringEncoding *enc1=CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-        
-        NSString *newMessage = [[NSString alloc] initWithData:data encoding:NSUTF16BigEndianStringEncoding];
-       // NSData *data_zhuce=[[NSData alloc]initWithData:data];
+    
+        // NSData *data_zhuce=[[NSData alloc]initWithData:data];
         //newMessage = [newMessage stringByReplacingOccurrencesOfString:@"\\" withString:@""];
-        NSLog(@"qudechangdu＝＝＝====＝%@",newMessage);
         switch (tag) {
-                        case 1:
-                NSLog(@"qudechangdu＝＝＝＝%@",newMessage);
-               // short length=[newMessage intValue];
+            case 1:{
+               // NSData *data_length;
+                int8_t v;
+                [ data getBytes:&v range:NSMakeRange(0, 1)];
+                int32_t ch1=(v & 0x0ff); 
+                [ data getBytes:&v range:NSMakeRange(1, 1)];
+                int32_t ch2=(v & 0x0ff);
+                short ms=(int16_t)((ch1 << 8) + (ch2 << 0));
+                NSLog(@"ms1===%d",ms);
+                
+            }
+                // short length=[newMessage intValue]
                 //NSLog(@"length=%d",length);
                 //int32_t ch[2]=data;
+   
                 break;
             case 2:
                 
             {
-                NSLog(@"=====================%@",newMessage);
-//                if ([newMessage isEqualToString:@"0"]) {
-//                    NSLog(@"注册失败");
-//                    alertviewzhucejieguo=[[UIAlertView alloc]initWithTitle:@"提示" message:@"注册失败" delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
-//                    [alertviewzhucejieguo show];
-//                }
-//                else {
-//                    NSLog(@"注册成功");
-//                    alertviewzhucejieguo=[[UIAlertView alloc]initWithTitle:@"恭喜" message:@"注册成功！" delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
-//                    [alertviewzhucejieguo show];
-//                    //[self performSelector:@selector(fanhui) withObject:nil afterDelay:4];
-//                }
-//                
-//                break;
+                int8_t v;
+                [ data getBytes:&v range:NSMakeRange(0, 1)];
+                int32_t ch1=(v & 0x0ff); 
+                [ data getBytes:&v range:NSMakeRange(1, 1)];
+                int32_t ch2=(v & 0x0ff);
+                short ms=(int16_t)((ch1 << 8) + (ch2 << 0));
+                NSLog(@"ms2===%d",ms);
+
+                           break;
                 
             }
             case 3:{
-                NSLog(@"=====================%@",newMessage);
+                int8_t v;
+                [ data getBytes:&v range:NSMakeRange(0, 1)];
+                int32_t ch1=(v & 0x0ff); 
+                [ data getBytes:&v range:NSMakeRange(1, 1)];
+                int32_t ch2=(v & 0x0ff);
+               // [ data getBytes:&v range:NSMakeRange(2, 1)];
+                int32_t ch3=(v & 0x0ff);
+               // [ data getBytes:&v range:NSMakeRange(3, 1)];
+                int32_t ch4=(v & 0x0ff);
+                int ms=((ch1 << 24) + (ch2 << 16) + (ch3 << 8) + (ch4 << 0));
+                NSLog(@"ms3===%d",ms);
+
+                
             }
                 break;
             case 4:{
-                NSLog(@"=====================%@",newMessage);
-            }
-                break;
+                NSString *newMessage = [[NSString alloc] initWithData:data encoding:NSUTF16BigEndianStringEncoding];
 
+                NSLog(@"=====================%@",newMessage);
+                if ([newMessage isEqualToString:@"1"]) {
+                    alertviewzhucejieguo=[[UIAlertView alloc]initWithTitle:@"恭喜" message:@"注册成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                    [alertviewzhucejieguo show];
+                }else {
+                    alertviewzhucejieguo=[[UIAlertView alloc]initWithTitle:@"提示" message:@"注册失败" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
+                    [alertviewzhucejieguo show];
+
+                }
+            }
+                
+                break;
+                
                 
             default:
                 break;
         }   
-
+        
     }
     
-  //获取登陆的数据
+    //获取登陆的数据
     if (sock==socket_denglu) {
+        NSLog(@"登陆取数据啊");
         NSString *newMessage = [[NSString alloc] initWithData:data encoding:NSUTF16BigEndianStringEncoding];
         newMessage = [newMessage stringByReplacingOccurrencesOfString:@"\\" withString:@""];
         // NSLog(@"=======%@",newMessage);
         switch (tag) {
-            case 0:
-                data1.messagelength=[newMessage intValue];
-                if (data1.messagelength==404) {
-                    //                UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:@"登陆失败" message:@"用户名或密码错误" delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
-                    //                [alertview show];
-                    
-                }
-                NSLog(@"changdu========%d",data1.messagelength);
-                break;
-            case 1:
-                data1.type=[newMessage intValue];
-                if (data1.type==0) {
-                    UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:@"登陆失败" message:@"用户名或密码错误" delegate:self cancelButtonTitle:@"nil" otherButtonTitles:nil, nil];
-                    [alertview show];
-                    
-                }
+            case 1:{
+                NSLog(@"取得长度");
+            }
                 break;
             case 2:
             {
-                NSLog(@"newmenssage=====%@,,,,",newMessage);
+                NSLog(@"取得type");
+            }
+                break;
+            case 3:
+            {
+                NSLog(@"取得什么");
                 
-                if ([newMessage intValue]>0) {
-                    data1.publisherIPandPort=[NSString stringWithFormat:newMessage];
-                    NSString *stringbiaoshi=@":";
-                    NSRange range1=[data1.publisherIPandPort rangeOfString:stringbiaoshi];
-                    stringhostlogin=[data1.publisherIPandPort substringWithRange:NSMakeRange(0, range1.location)];
-                    stringportlogin = [data1.publisherIPandPort substringFromIndex:range1.location+1];
-                    NSLog(@"publisherIPandPort======================%@",data1.publisherIPandPort);
-                    NSLog(@"stringport====%@",stringportlogin);
-                    NSLog(@"host===%@",stringhostlogin);
-                    NSUserDefaults *userstringhost=[NSUserDefaults standardUserDefaults];
-                    [userstringhost setObject:stringhostlogin forKey:@"host"];
-                    [userstringhost synchronize];
-                    
-                    NSUserDefaults *userstringport=[NSUserDefaults standardUserDefaults];
-                    [userstringport setObject:stringportlogin forKey:@"port"];
-                    [userstringport synchronize];
-                }
+//                if ([newMessage intValue]>0) {
+//                    data1.publisherIPandPort=[NSString stringWithFormat:newMessage];
+//                    NSString *stringbiaoshi=@":";
+//                    NSRange range1=[data1.publisherIPandPort rangeOfString:stringbiaoshi];
+//                    stringhostlogin=[data1.publisherIPandPort substringWithRange:NSMakeRange(0, range1.location)];
+//                    stringportlogin = [data1.publisherIPandPort substringFromIndex:range1.location+1];
+//                    NSLog(@"publisherIPandPort======================%@",data1.publisherIPandPort);
+//                    NSLog(@"stringport====%@",stringportlogin);
+//                    NSLog(@"host===%@",stringhostlogin);
+//                    NSUserDefaults *userstringhost=[NSUserDefaults standardUserDefaults];
+//                    [userstringhost setObject:stringhostlogin forKey:@"host"];
+//                    [userstringhost synchronize];
+//                    
+//                    NSUserDefaults *userstringport=[NSUserDefaults standardUserDefaults];
+//                    [userstringport setObject:stringportlogin forKey:@"port"];
+//                    [userstringport synchronize];
+//                }
                 
                 
                 break;
                 
             }
-            case 3:{
-                data1.sessionID=[NSString stringWithFormat:newMessage];
-                data1.sessionidlength=data1.sessionID.length;
-                NSLog(@"data1.sessionID======%@",data1.sessionID);
-                NSUserDefaults *userid=[NSUserDefaults standardUserDefaults];
-                [userid setObject:data1.sessionID forKey:@"id"];
-                [userid synchronize];
+            case 4:{
+                
+                NSLog(@"newmessage4=========================%@",newMessage);
+               // newmessage=========================1222.73.211.226:2600085966015110784066761234XAGUSD,45,1/AgT+D,30,1/AuT+D,31,1/USD,32,3/AG1207,33,1/AG1208,34,1/AG1209,35,1/AG1210,36,1/AG1211,37,1/AG1212,38,1/AG1301,39,1/AG1302,40,1/AG1303,41,1/AG1304,42,1/AG1305,43,1/AG1306,44,1/PD,46,1/PT,47,1
+                data1.result=[[newMessage substringToIndex:1]intValue];
+                NSLog(@"data1.result===%d",data1.result);
+                
+                
+                
+
+                
+//                data1.sessionID=[NSString stringWithFormat:newMessage];
+//                data1.sessionidlength=data1.sessionID.length;
+//                NSLog(@"data1.sessionID======%@",data1.sessionID);
+//                NSUserDefaults *userid=[NSUserDefaults standardUserDefaults];
+//                [userid setObject:data1.sessionID forKey:@"id"];
+//                [userid synchronize];
                 
                 
                 break;}
-            case 4:
-            {
-                data1.captchas=[NSString stringWithFormat:newMessage];
-                NSLog(@"captchas===%@",data1.captchas);
-                data1.captchaslength=data1.captchas.length;
-                data1.totallength=(3+1+data1.sessionidlength+1+data1.captchaslength)*2;
-                NSLog(@"totallength===========%d",data1.totallength);
-                NSUserDefaults *usercaptchas=[NSUserDefaults standardUserDefaults];
-                [usercaptchas setObject:data1.captchas forKey:@"captchas"];
-                [usercaptchas synchronize];
+            case 5:
+            {                NSLog(@"newmessage5=========================%@",newMessage);
+                
+                
+                                if (newMessage!=nil) {
+                                   data1.publisherIPandPort=[NSString stringWithFormat:newMessage];
+                                   NSString *stringbiaoshi=@":";
+                                   NSRange range1=[data1.publisherIPandPort rangeOfString:stringbiaoshi];
+                                   stringhostlogin=[data1.publisherIPandPort substringWithRange:NSMakeRange(0, range1.location)];
+                                   stringportlogin = [data1.publisherIPandPort substringFromIndex:range1.location+1];
+                                   NSLog(@"publisherIPandPort======================%@",data1.publisherIPandPort);
+                                   NSLog(@"stringport====%@",stringportlogin);
+                                   NSLog(@"host===%@",stringhostlogin);
+                                   NSUserDefaults *userstringhost=[NSUserDefaults standardUserDefaults];
+                                   [userstringhost setObject:stringhostlogin forKey:@"host"];
+                                  [userstringhost synchronize];
+                                   
+                                   NSUserDefaults *userstringport=[NSUserDefaults standardUserDefaults];
+                                    [userstringport setObject:stringportlogin forKey:@"port"];
+                                   [userstringport synchronize];
+                               }
+
+                
+                
+                
+
+//                data1.captchas=[NSString stringWithFormat:newMessage];
+//                NSLog(@"captchas===%@",data1.captchas);
+//                data1.captchaslength=data1.captchas.length;
+//                data1.totallength=(3+1+data1.sessionidlength+1+data1.captchaslength)*2;
+//                NSLog(@"totallength===========%d",data1.totallength);
+//                NSUserDefaults *usercaptchas=[NSUserDefaults standardUserDefaults];
+//                [usercaptchas setObject:data1.captchas forKey:@"captchas"];
+//                [usercaptchas synchronize];
                 break;
             }
                 
-            case 5:{
-                NSLog(@"resultstring====%@",newMessage);
-                data1.result=[newMessage intValue];
+            case 6:{
+                NSLog(@"resultstring6====%@",newMessage);
+                //data1.result=[newMessage intValue];
             }            
                 // [self performSelectorInBackground:@selector(nihao) withObject:nil];
                 
                 break;
-            case 6:{
-                NSLog(@"newMessage======%@",newMessage);
-                data1.ndicate=[NSString stringWithFormat:newMessage];
+            case 7:{
+                NSLog(@"newMessage7======%@",newMessage);
+               // data1.ndicate=[NSString stringWithFormat:newMessage];
                 // [Personaldetail addproductname:@"ss" id:@"12" type:@"32"];
                 // NSString * str = @"AgT+D,1,1/AuT+D,2,1/USD,3,3/AG1207,4,1/AG1208,5,1/AG1209,6,1/AG1210,7,1/AG1211,8,1/AG1212,9,1/AG1301,10,1/AG1302,11,1/AG1303,12,1/AG1304,13,1/AG1305,14,1/AG1306,15,1/XAGUSD,16,1/PD,17,1/PT,18,1";
-                NSString * str = [NSString stringWithFormat:newMessage];
+//                NSString * str = [NSString stringWithFormat:newMessage];
+//                
+//                
+//                NSArray   *arr = [str componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"/"]];//去掉斜杠，把字符串转化成数组
+//                NSLog(@"%@",arr);
+//                NSString * str1=@",";
+//                NSMutableArray * array_name = [[NSMutableArray alloc] init];
+//                NSMutableArray * array_id = [[NSMutableArray alloc] init];
+//                NSMutableArray * array_type = [[NSMutableArray alloc] init];
+//                for (NSString * ing in arr) {
+//                    NSRange range = [ing rangeOfString:str1];
+//                    NSString * str3 = [ing substringToIndex:range.location] ;
+//                    NSString * str4 = [ing substringFromIndex:range.location+1];
+//                    
+//                    NSRange range1 =[str4 rangeOfString:str1];
+//                    NSString * str5 = [str4 substringToIndex:range1.location];
+//                    NSString * str6 = [str4 substringFromIndex:range1.location+1];
+//                    [array_id addObject:str5];
+//                    [array_type addObject:str6];
+//                    [array_name addObject:str3];
+//                }
+//                NSMutableArray *array_totalname=[Personaldetail findall];
+//                NSLog(@"totanarray=%d",[array_totalname count]);
+//                
+//                NSLog(@"arrayname = %@,%d",array_name,array_name .count);
+//                NSLog(@"arrayid = %@,%d",array_id,array_id .count);
+//                NSLog(@"arraytype = %@,%d",array_type,array_type .count);
+//                if ([array_totalname count]<[array_name count]) {
+//                    for (int i=[array_name count]; i>[array_totalname count]; i--) {
+//                        [ Personaldetail addproductname:[array_name objectAtIndex:i-1] id:[array_id objectAtIndex:i-1] type:[array_type objectAtIndex:i-1]];
+//                    }
+//                }else {
+//                    NSLog(@"数据库不需要更新");
+//                }
                 
-                
-                NSArray   *arr = [str componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"/"]];//去掉斜杠，把字符串转化成数组
-                NSLog(@"%@",arr);
-                NSString * str1=@",";
-                NSMutableArray * array_name = [[NSMutableArray alloc] init];
-                NSMutableArray * array_id = [[NSMutableArray alloc] init];
-                NSMutableArray * array_type = [[NSMutableArray alloc] init];
-                for (NSString * ing in arr) {
-                    NSRange range = [ing rangeOfString:str1];
-                    NSString * str3 = [ing substringToIndex:range.location] ;
-                    NSString * str4 = [ing substringFromIndex:range.location+1];
-                    
-                    NSRange range1 =[str4 rangeOfString:str1];
-                    NSString * str5 = [str4 substringToIndex:range1.location];
-                    NSString * str6 = [str4 substringFromIndex:range1.location+1];
-                    [array_id addObject:str5];
-                    [array_type addObject:str6];
-                    [array_name addObject:str3];
-                }
-                NSMutableArray *array_totalname=[Personaldetail findall];
-                NSLog(@"totanarray=%d",[array_totalname count]);
-                
-                NSLog(@"arrayname = %@,%d",array_name,array_name .count);
-                NSLog(@"arrayid = %@,%d",array_id,array_id .count);
-                NSLog(@"arraytype = %@,%d",array_type,array_type .count);
-                if ([array_totalname count]<[array_name count]) {
-                    for (int i=[array_name count]; i>[array_totalname count]; i--) {
-                        [ Personaldetail addproductname:[array_name objectAtIndex:i-1] id:[array_id objectAtIndex:i-1] type:[array_type objectAtIndex:i-1]];
-                    }
-                }else {
-                    NSLog(@"数据库不需要更新");
-                }
-                
-                [self performSelector:@selector(backtorootviewC)];
+              //  [self performSelector:@selector(backtorootviewC)];
                 
                 // data1.re=[newMessage intValue];
             }            
@@ -1173,7 +1268,7 @@ texfield_zhuceusername.borderStyle=UITextBorderStyleRoundedRect;
             default:
                 break;
         }   
-
+        
     }
     
     
@@ -1213,7 +1308,7 @@ texfield_zhuceusername.borderStyle=UITextBorderStyleRoundedRect;
                     }
                     array1000=[[NSArray alloc]initWithObjects:_data2.code,_data2.last,_data2.high,_data2.low,_data2.changne, nil];
                     NSLog(@"array1000%@",array1000);
-                   // [Personaldetail upDateWithOpen:_data2.open High:_data2.high Low:_data2.low Vlume:_data2.changne Time:_data2.quotetime fromid:_data2.code];
+                    // [Personaldetail upDateWithOpen:_data2.open High:_data2.high Low:_data2.low Vlume:_data2.changne Time:_data2.quotetime fromid:_data2.code];
                     [Personaldetail upDateWithOpen:_data2.open High:_data2.high Low:_data2.low Vlume:_data2.changne Time:_data2.quotetime Last:_data2.last fromid:_data2.code];
                     [mytableview_productdetail reloadData];
                     
@@ -1229,11 +1324,11 @@ texfield_zhuceusername.borderStyle=UITextBorderStyleRoundedRect;
 
 -(void)backtorootviewC{
     NSLog(@"data1.result==%d",data1.result);
-   
+    
     switch (data1.result) {
         case 1:
         {
-           // [self dismissModalViewControllerAnimated:NO];
+            // [self dismissModalViewControllerAnimated:NO];
             [self lianjie];
             // MarketViewController *aview=[[MarketViewController alloc]init];
             // [self.navigationController pushViewController:aview animated:NO];
@@ -1253,7 +1348,7 @@ texfield_zhuceusername.borderStyle=UITextBorderStyleRoundedRect;
         {
             alertviewdenglujieguo=[[UIAlertView alloc]initWithTitle:@"登录失败" message:@"密码不正确" delegate:self cancelButtonTitle:@"请重新登录" otherButtonTitles:@"取消", nil];
             signin=0;
-
+            
             [alertviewdenglujieguo show];
             
         }
@@ -1262,7 +1357,7 @@ texfield_zhuceusername.borderStyle=UITextBorderStyleRoundedRect;
         {
             alertviewdenglujieguo=[[UIAlertView alloc]initWithTitle:@"登陆失败" message:@"服务器未启动" delegate:self cancelButtonTitle:@"请稍后登陆" otherButtonTitles:nil, nil];
             signin=0;
-
+            
             [alertviewdenglujieguo show];
         }
             break;
@@ -1270,7 +1365,7 @@ texfield_zhuceusername.borderStyle=UITextBorderStyleRoundedRect;
         {
             alertviewdenglujieguo=[[UIAlertView alloc]initWithTitle:@"登录失败" message:@"帐号过期" delegate:self cancelButtonTitle:@"请重新申请帐号" otherButtonTitles:nil, nil];
             signin=0;
-
+            
             [alertviewdenglujieguo show];
         }
             break;
@@ -1279,7 +1374,7 @@ texfield_zhuceusername.borderStyle=UITextBorderStyleRoundedRect;
             alertviewdenglujieguo=[[UIAlertView alloc]initWithTitle:@"登陆失败" message:@"帐号未激活" delegate:self cancelButtonTitle:@"请激活后登陆" otherButtonTitles:nil, nil];
             [alertviewdenglujieguo show];
             signin=0;
-
+            
         }
             break;
             
@@ -1313,7 +1408,7 @@ texfield_zhuceusername.borderStyle=UITextBorderStyleRoundedRect;
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     NSLog(@"22222");
-
+    
     NSUserDefaults * user=[NSUserDefaults standardUserDefaults];
     array_ziduan=[user objectForKey:@"ziduan"];
     
@@ -1335,7 +1430,7 @@ texfield_zhuceusername.borderStyle=UITextBorderStyleRoundedRect;
             break;
     }
     NSLog(@"countarray_product=%d",[array_product count]);
-
+    
     if (interfaceOrientation==UIInterfaceOrientationPortrait||interfaceOrientation==UIInterfaceOrientationPortraitUpsideDown) {
         rect_aview=CGRectMake(0, 0, 320, 480-44-49-17);
         rect_viewproductnameheader=CGRectMake(0, 0, 100, 30);
@@ -1359,16 +1454,15 @@ texfield_zhuceusername.borderStyle=UITextBorderStyleRoundedRect;
         scrowviewheader.contentSize=scrowview_cellsc.contentSize;
         
         
-        
-        
+        self.self_view_frame_size_width = 320;
     }
     if (interfaceOrientation==UIInterfaceOrientationLandscapeLeft||interfaceOrientation==UIInterfaceOrientationLandscapeRight) {
-        rect_aview=CGRectMake(0, 0, 480, 320-44-49-17);
+        rect_aview=CGRectMake(0, 0, 480, 320-44-49);
         rect_viewproductnameheader=CGRectMake(0, 0, 100, 30);
         rect_prodcuctdetailheader=CGRectMake(0, 0, 370, 30);
         rect_scrowviewheader=CGRectMake(100, 0, 370, 30);
         rect_scrowview_cellsc=CGRectMake(100, 0, 480-100, [array_product count]*44+100);
-        rect_scr_total=CGRectMake(0, 30, 480, 320-17-44-49);
+        rect_scr_total=CGRectMake(0, 30, 480, 320-44-49);
         rect_tableviewproductname=CGRectMake(0, 0, 100, [array_product count]*44+100);
         rect_tableviewproductdetail=CGRectMake(0, 0, [array_ziduan count]*110,[array_product count]*44+100);
         
@@ -1382,9 +1476,8 @@ texfield_zhuceusername.borderStyle=UITextBorderStyleRoundedRect;
         mytableview_productdetail.frame=rect_tableviewproductdetail;
         scrowview_cellsc.contentSize=CGSizeMake([array_ziduan count]*110, 0);
         scrowviewheader.contentSize=scrowview_cellsc.contentSize;
+        self.self_view_frame_size_width = 480;
         
-        
-
     }
     return YES;
     NSLog(@"执行了改变tableviewfram");

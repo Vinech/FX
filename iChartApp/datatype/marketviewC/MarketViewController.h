@@ -11,7 +11,7 @@
 //#import "SFHFKeychainUtils.h"
 @interface MarketViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,GCDAsyncSocketDelegate,UIScrollViewDelegate,UIActionSheetDelegate,UIAlertViewDelegate,UITextFieldDelegate>{
     UIActionSheet *actionsheet_setup;
-      NSString *string_yanse;//用老接收高亮或者黑暗
+    NSString *string_yanse;//用老接收高亮或者黑暗
     NSString *string_color;//用来判断高亮或者黑暗
     int count;//用于计算获取数据的次数
     GCDAsyncSocket *socket1;
@@ -32,7 +32,7 @@
     //登陆弹框里面的东西
     UITextField *textfield_dengluusername;
     UITextField *textfield_denglumin;
- UIAlertView *alertviewdenglujieguo;
+    UIAlertView *alertviewdenglujieguo;
     UIAlertView *alertviewzhucejieguo;
     
     //navigationitem以下的东西
@@ -58,8 +58,9 @@
     CGRect rect_tableviewproductname;
     CGRect rect_tableviewproductdetail;
     
-    
 }
+@property(nonatomic,assign)    int self_view_frame_size_width;
+
 @property(strong,nonatomic) NSString *stringhost;
 @property(strong,nonatomic) NSString *stringport;
 @property (nonatomic,assign)int signin;

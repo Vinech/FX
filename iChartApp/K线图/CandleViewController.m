@@ -66,47 +66,35 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
--(void)popToRoot:(NSMutableArray *)theArray
+-(void)popToRoot:(NSMutableArray *)theArray pointPhone:(int)pointPhone
 {
+    
     self.allProiod = theArray;
     NSLog(@"lululululululuul = %@",self.allProiod);
+    if (pointPhone == 320) {
+        [self shouldAutorotateToInterfaceOrientation:UIInterfaceOrientationPortrait];
+    }else {
+        return;
+    }
     [self getData];
 }
 
 
 
 -(void)viewWillAppear:(BOOL)animated{
-    NSUserDefaults *user_style=[NSUserDefaults standardUserDefaults];
-    //    string_yanse = [[NSString alloc] init];
-    //    string_color = [[NSString alloc] init];
-    string_yanse=[user_style objectForKey:@"style"];
-    //    NSMutableArray * array2 = [[NSMutableArray alloc] init];
-    //    array2 = [user_style objectForKey:@"Data"];
-    //    if (array2.count !=0) 
-    //    {
-    //        [self.allProiod removeAllObjects];
-    //        self.allProiod = array2;
-    //        NSLog(@"aaaaaaaalulululuull === %@",self.allProiod);
-    //        [self getData];
-    //    }else 
-    //    {
-    //        [self getData];
-    //    }
     
-    //    self.allProiod = [user_style objectForKey:@"Data"];
-    //    if (self.allProiod.count != 0) 
-    //    { 
-    //        [self getData];
-    //    }else {
-    //        [self getData];
-    //    }
-    //    NSLog(@"color ====   %@",string_color);
+    
+    
+    
+    NSUserDefaults *user_style=[NSUserDefaults standardUserDefaults];
+    string_yanse=[user_style objectForKey:@"style"];
     
     if (![string_yanse isEqualToString:string_color]) 
     {
         //        NSLog(@"-------000990000000000000-=======");
         // [self viewDidLoad];
     }
+    
 }
 - (void)initPeriod
 {
@@ -159,6 +147,11 @@
     //    NSLog(@"newnewnewnew%@",self.allProiod);
 }
 
+- (void)backView
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.allProiod = [[NSMutableArray alloc] init];
@@ -172,6 +165,10 @@
     }
     [self initPeriod];
     
+    self.navigationController.navigationBar.backItem.hidesBackButton = YES;
+    
+    UIBarButtonItem * backBar = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStyleDone target:self action:@selector(backView)];
+    self.navigationItem.leftBarButtonItem = backBar;
     
     backgroundViews = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 120)];
     
@@ -215,7 +212,7 @@
     [backgroundViews addSubview:label];
     
     self.navigationItem.title=label.text;
-
+    
     
     Personaldetail *userproduct=[[Personaldetail alloc]init];
     userproduct = [Personaldetail findpersonaldetailwithproductname:label.text];
@@ -475,58 +472,23 @@
     [self getData];
     //[self JUHUA];
 }
+- (void)HChooseIndexes
+{
+    OptionViewController * option = [[OptionViewController alloc] init];
+    
+    option.dataArray = self.allProiod;
+    [option setDelegate:self];    
+    
+    [self.navigationController pushViewController:option animated:YES];
+    
+}
+
 - (void)ChooseIndexes
 {
     OptionViewController * option = [[OptionViewController alloc] init];
-    //    if (self.allProiod) 
-    //    {
-    //        
-    //    }else {
-    //        
-    //    
-    //    self.allProiod = [[NSMutableArray alloc] initWithObjects:[NSString stringWithFormat:@"%d",self.periodSma],
-    //                                                             [NSString stringWithFormat:@"%d",self.periodWma],
-    //                      [NSString stringWithFormat:@"%d",self.periodEma],
-    //                      [NSString stringWithFormat:@"%d",self.periodBoll],
-    //                      [NSString stringWithFormat:@"%.f",self.bandDeviation],
-    //                      [NSString stringWithFormat:@"%d",self.periodRsi],
-    //                      [NSString stringWithFormat:@"%d",self.periodMacd],
-    //                      [NSString stringWithFormat:@"%d",self.longMacdPeriod],
-    //                      [NSString stringWithFormat:@"%d",self.shortMacdPeriod],
-    //                      [NSString stringWithFormat:@"%d",self.kPeriod],
-    //                      [NSString stringWithFormat:@"%d",self.dPeriod],
-    //                      [NSString stringWithFormat:@"%d",self.jPeriod],
-    //                      [NSString stringWithFormat:@"%d",self.periodCci],
-    //                      [NSString stringWithFormat:@"%d",self.periodMom],
-    //                      [NSString stringWithFormat:@"%d",self.periodAdx], nil];
-    //    }
+    
     option.dataArray = self.allProiod;
-    [option setDelegate:self];
-    //    option.periodMom = self.periodMom;
-    //    option.periodAdx = self.periodAdx;
-    //    
-    //    option.periodBoll= self.periodBoll;
-    //    option.periodCci = self.periodCci;
-    //    
-    //    option.periodEma = self.periodEma;
-    //    option.periodKdj = self.periodKdj;
-    //    
-    //    option.periodMacd= self.periodMacd;
-    //    option.periodRsi = self.periodRsi;
-    //    
-    //    option.periodSma = self.periodSma;
-    //    option.periodWma = self.periodWma;
-    //    
-    //    option.longMacdPeriod = self.longMacdPeriod;
-    //    option.shortMacdPeriod= self.shortMacdPeriod;
-    //    
-    //    option.bandDeviation = self.bandDeviation;
-    //    option.kPeriod = self.kPeriod;
-    //    
-    //    option.dPeriod = self.dPeriod;
-    //    option.jPeriod = self.jPeriod;
-    
-    
+    [option setDelegate:self];    
     
     [self.navigationController pushViewController:option animated:YES];
 }
@@ -591,13 +553,14 @@
 	[secs addObject:@"0"];
 	[secs addObject:@"4"];
 	[self.candleChart addSections:3 withRatios:secs];
-	[self.candleChart getSection:2].hidden = YES;
+	[self.candleChart getSection:1].hidden = YES;
+    
 	[[[self.candleChart sections] objectAtIndex:0] addYAxis:0];
 	[[[self.candleChart sections] objectAtIndex:1] addYAxis:0];
 	[[[self.candleChart sections] objectAtIndex:2] addYAxis:0];
     
     [self.hcandleChart addSections:3 withRatios:secs];
-	[self.hcandleChart getSection:2].hidden = YES;
+	[self.hcandleChart getSection:1].hidden = YES;
     
     [[[self.hcandleChart sections] objectAtIndex:0] addYAxis:0];
 	[[[self.hcandleChart sections] objectAtIndex:1] addYAxis:0];
@@ -683,56 +646,6 @@
 	[series addObject:serie];
 	[secOne addObject:serie];
     
-    //    //**************************************************************************************************************
-    //    //MA60
-    //	serie = [[NSMutableDictionary alloc] init]; 
-    //	data = [[NSMutableArray alloc] init];
-    //	[serie setObject:@"boll_upper" forKey:@"name"];
-    //	[serie setObject:@"boll_upper" forKey:@"label"];
-    //	[serie setObject:data forKey:@"data"];
-    //	[serie setObject:@"line" forKey:@"type"];
-    //	[serie setObject:@"0" forKey:@"yAxis"];
-    //	[serie setObject:@"0" forKey:@"section"];
-    //	[serie setObject:@"250,232,115" forKey:@"color"];
-    //	[serie setObject:@"250,232,115" forKey:@"negativeColor"];
-    //	[serie setObject:@"250,232,115" forKey:@"selectedColor"];
-    //	[serie setObject:@"250,232,115" forKey:@"negativeSelectedColor"];
-    //	[series addObject:serie];
-    //	[secOne addObject:serie];
-    //    
-    //    //MA60
-    //	serie = [[NSMutableDictionary alloc] init]; 
-    //	data = [[NSMutableArray alloc] init];
-    //	[serie setObject:@"boll_value" forKey:@"name"];
-    //	[serie setObject:@"boll_value" forKey:@"label"];
-    //	[serie setObject:data forKey:@"data"];
-    //	[serie setObject:@"line" forKey:@"type"];
-    //	[serie setObject:@"0" forKey:@"yAxis"];
-    //	[serie setObject:@"0" forKey:@"section"];
-    //	[serie setObject:@"255,255,255" forKey:@"color"];
-    //	[serie setObject:@"255,255,255" forKey:@"negativeColor"];
-    //	[serie setObject:@"255,255,255" forKey:@"selectedColor"];
-    //	[serie setObject:@"255,255,255" forKey:@"negativeSelectedColor"];
-    //	[series addObject:serie];
-    //	[secOne addObject:serie];
-    //    
-    //    //MA60
-    //	serie = [[NSMutableDictionary alloc] init]; 
-    //	data = [[NSMutableArray alloc] init];
-    //	[serie setObject:@"boll_lower" forKey:@"name"];
-    //	[serie setObject:@"boll_lower" forKey:@"label"];
-    //	[serie setObject:data forKey:@"data"];
-    //	[serie setObject:@"line" forKey:@"type"];
-    //	[serie setObject:@"0" forKey:@"yAxis"];
-    //	[serie setObject:@"0" forKey:@"section"];
-    //	[serie setObject:@"232,115,250" forKey:@"color"];
-    //	[serie setObject:@"232,115,250" forKey:@"negativeColor"];
-    //	[serie setObject:@"232,115,250" forKey:@"selectedColor"];
-    //	[serie setObject:@"232,115,250" forKey:@"negativeSelectedColor"];
-    //	[series addObject:serie];
-    //	[secOne addObject:serie];
-    
-    //************************************************************************************************************************************
 	
 	//VOL
 	serie = [[NSMutableDictionary alloc] init]; 
@@ -1870,20 +1783,21 @@
     int i = self.ShortperiodEma;
     
     for (int j = 0; j <[ShortEma count]; j++) {
-        float shortMacd = [[[ShortEma objectAtIndex:j] objectAtIndex:0]floatValue]-[[[LongEma objectAtIndex:j] objectAtIndex:0]floatValue];
+        float shortMacd = [[[ShortEma objectAtIndex:j] objectAtIndex:0]floatValue];//-[[[LongEma objectAtIndex:j] objectAtIndex:0]floatValue];
         
-        //        if (i>=LongperiodEma) {
-        //            float longMacd = [[LongEma objectAtIndex:j] floatValue];
-        //            float dst = shortMacd - longMacd;
-        NSMutableArray *item = [[NSMutableArray alloc] init];
-        [item addObject:[@"" stringByAppendingFormat:@"%f",shortMacd]];
-        [DifMcad addObject:item];
-        //    }
-        
+        if (i>=LongperiodEma) {
+            float longMacd = [[[LongEma objectAtIndex:j] objectAtIndex:0] floatValue];
+            float dst = shortMacd - longMacd;
+            NSMutableArray *item = [[NSMutableArray alloc] init];
+            [item addObject:[@"" stringByAppendingFormat:@"%f",dst]];
+            [DifMcad addObject:item];
+            
+        } 
         i++;
+        
     }
     
-    [dic setObject:DifMcad forKey:@"macd"];
+    [dic setObject:DifMcad forKey:@"Dif"];
     //    NSLog(@"DifMcad = %d",DifMcad.count);
     
     
@@ -1899,36 +1813,31 @@
         if(i == 0){
             float sma = 0.0;
             for(int j=i;j<i+[[self.allProiod objectAtIndex:6] intValue];j++){
-                sma += [[[data objectAtIndex:j] objectAtIndex:1] floatValue];
+                sma += [[[DifMcad objectAtIndex:i] objectAtIndex:0] floatValue];
             }
             ema2 = sma / [[self.allProiod objectAtIndex:6] intValue];
             
         }
         else {
-            float point =  [[[data objectAtIndex:i] objectAtIndex:1] floatValue];
+            float point =  [[[DifMcad objectAtIndex:i] objectAtIndex:0] floatValue];
             ema2 = point * K + ema2 * (1.0 - K2);
         }
         NSMutableArray *item = [[NSMutableArray alloc] init];
         [item addObject:[@"" stringByAppendingFormat:@"%f",ema2]];
         [dea addObject:item];
     }
-    [dic setObject:dea forKey:@"dea"];
+    [dic setObject:dea forKey:@"Dea"];
     
-    //    NSLog(@"dea = %d",dea.count);
+    NSMutableArray * barArray = [[NSMutableArray alloc] init];
+    for (int i = 0; i<[DifMcad count]; i++) {
+        float bars = [[[DifMcad objectAtIndex:i] objectAtIndex:0] floatValue]-[[[dea objectAtIndex:i] objectAtIndex:0] floatValue];
+        NSMutableArray *item = [[NSMutableArray alloc] init];
+        [item addObject:[@"" stringByAppendingFormat:@"%f",bars]];
+        [barArray addObject:item];
+        
+    }
+    [dic setObject:barArray forKey:@"Bar"];
     
-    //    
-    //    for (int w = 0; w <[DstMcad count]; w++) {
-    //        for (int t = 0; t<9; t++) {
-    //            float dif =dif + [[DstMcad objectAtIndex:w] floatValue];
-    //
-    //            dif = dif/9;
-    //        }
-    //    }
-    
-    //    for (int s = 0; s <[SignaEma count]; s++) {
-    //        float signal = [[SignaEma objectAtIndex:s]floatValue];
-    //        
-    //    }
     
 }
 
@@ -2003,61 +1912,6 @@
         [self   adx:dic From:data];
         
 		
-		
-		
-        //************* WR *********************************************************************************************************************
-        
-        
-        //		NSMutableArray *wr = [[NSMutableArray alloc] init];
-        //	    for(int i = 60;i < data.count;i++){
-        //			float h  = [[[data objectAtIndex:i] objectAtIndex:2] floatValue];
-        //			float l = [[[data objectAtIndex:i] objectAtIndex:3] floatValue];
-        //			float c = [[[data objectAtIndex:i] objectAtIndex:1] floatValue];
-        //		    for(int j=i;j>i-10;j--){
-        //				if([[[data objectAtIndex:j] objectAtIndex:2] floatValue] > h){
-        //				    h = [[[data objectAtIndex:j] objectAtIndex:2] floatValue];
-        //				}
-        //                
-        //				if([[[data objectAtIndex:j] objectAtIndex:3] floatValue] < l){
-        //					l = [[[data objectAtIndex:j] objectAtIndex:3] floatValue];
-        //				}
-        //			}
-        //			
-        //			float val = (h-c)/(h-l)*100;
-        //			NSMutableArray *item = [[NSMutableArray alloc] init];
-        //			[item addObject:[@"" stringByAppendingFormat:@"%f",val]];
-        //			[wr addObject:item];
-        //		}
-        //		[dic setObject:wr forKey:@"wr"];
-        //		
-        //    
-        //		//VR
-        //		NSMutableArray *vr = [[NSMutableArray alloc] init];
-        //	    for(int i = 60;i < data.count;i++){
-        //			float inc = 0;
-        //			float dec = 0;
-        //			float eq  = 0;
-        //		    for(int j=i;j>i-24;j--){
-        //				float o = [[[data objectAtIndex:j] objectAtIndex:0] floatValue];
-        //				float c = [[[data objectAtIndex:j] objectAtIndex:1] floatValue];
-        //                
-        //				if(c > o){
-        //				    inc += [[[data objectAtIndex:j] objectAtIndex:4] intValue];
-        //				}else if(c < o){
-        //				    dec += [[[data objectAtIndex:j] objectAtIndex:4] intValue];
-        //				}else{
-        //				    eq  += [[[data objectAtIndex:j] objectAtIndex:4] intValue];
-        //				}
-        //			}
-        //			
-        //			float val = (inc+1*eq/2)/(dec+1*eq/2);
-        //			NSMutableArray *item = [[NSMutableArray alloc] init];
-        //			[item addObject:[@"" stringByAppendingFormat:@"%f",val]];
-        //			[vr addObject:item];
-        //			[item release];
-        //		}
-        //		[dic setObject:vr forKey:@"vr"];
-        
 	}else{
 		//price 
 		NSMutableArray *price = [[NSMutableArray alloc] init];
@@ -2096,8 +1950,10 @@
 	
 	[self.candleChart appendToData:[dic objectForKey:@"adx"] forName:@"adx"];
 	[self.candleChart appendToData:[dic objectForKey:@"cci"] forName:@"cci"];
-    [self.candleChart appendToData:[dic objectForKey:@"macd"] forName:@"macd"];
-    [self.candleChart appendToData:[dic objectForKey:@"dea"] forName:@"dea"];
+    
+    [self.candleChart appendToData:[dic objectForKey:@"Dif"] forName:@"Dif"];
+    [self.candleChart appendToData:[dic objectForKey:@"Dea"] forName:@"Dea"];
+    [self.candleChart appendToData:[dic objectForKey:@"Bar"] forName:@"Bar"];
     
     
 	[self.candleChart appendToData:[dic objectForKey:@"kdj_k"] forName:@"kdj_k"];
@@ -2129,69 +1985,77 @@
 #pragma mark - 横竖屏shouldAuto
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     
+    NSLog(@"看你丫听的掉没掉丑傻逼");
     if (interfaceOrientation == UIInterfaceOrientationLandscapeRight || interfaceOrientation == UIInterfaceOrientationLandscapeLeft) {
         
         NSLog(@"横屏横屏横屏横屏横屏横屏横屏横屏横屏横屏横屏横屏横屏横屏横屏横屏");
         
-        self.view.frame =CGRectMake(0, 0,480, 320);
+        self.view.frame                     = CGRectMake(0, 0,480, 320);
         
-        self.viewHUB.frame = CGRectMake(0, 0, 480,320);
+        self.viewHUB.frame                  = CGRectMake(0, 0, 480,320);
         
-        self.activity.frame = CGRectMake(0, 0,45, 45);
+        self.activity.frame                 = CGRectMake(0, 0,45, 45);
         
-        self.viewBack.frame = CGRectMake(195, 127.5, 90, 45);
+        self.viewBack.frame                 = CGRectMake(195, 127.5, 90, 45);
         
-        self.imageBack.frame = CGRectMake(47.5+10.5, 12.5,20, 20);
+        self.imageBack.frame                = CGRectMake(47.5+10.5, 12.5,20, 20);
         
-        self.backButton.frame = CGRectMake(45,0, 45, 45);
+        self.backButton.frame               = CGRectMake(45,0, 45, 45);
         
-        self.hcandleChart.frame = CGRectMake(0,0,self.view.frame.size.width, 320-32-49);
+        self.hcandleChart.frame             = CGRectMake(0,10,self.view.frame.size.width, 320-32-49);
         
         [self.view addSubview:self.hcandleChart];
         
         [self.candleChart  removeFromSuperview];
         
-        self.SELF_VIEW_FRAME_X = self.view.frame.origin.x;
-        self.SELF_VIEW_FRAME_Y = self.view.frame.origin.y;
-        self.SELF_VIEW_FRAME_WIDTH = self.view.frame.size.width;
-        self.SELF_VIEW_FRAME_HEIGHT= self.view.frame.size.height;
+        self.SELF_VIEW_FRAME_X              = self.view.frame.origin.x;
+        self.SELF_VIEW_FRAME_Y              = self.view.frame.origin.y;
+        self.SELF_VIEW_FRAME_WIDTH          = self.view.frame.size.width;
+        self.SELF_VIEW_FRAME_HEIGHT         = self.view.frame.size.height;
         
-        self.SELF_CANDLECHART_FRAME_X = self.candleChart.frame.origin.x;
-        self.SELF_CANDLECHART_FRAME_Y = self.candleChart.frame.origin.y;
-        self.SELF_CANDLECHART_FRAME_WIDTH = self.candleChart.frame.size.width;
-        self.SELF_CANDLECHART_FRAME_HEIGHT= self.candleChart.frame.size.height;
+        self.SELF_CANDLECHART_FRAME_X       = self.candleChart.frame.origin.x;
+        self.SELF_CANDLECHART_FRAME_Y       = self.candleChart.frame.origin.y;
+        self.SELF_CANDLECHART_FRAME_WIDTH   = self.candleChart.frame.size.width;
+        self.SELF_CANDLECHART_FRAME_HEIGHT  = self.candleChart.frame.size.height;
         
-        self.VIEWHUB_FRAME_X = self.viewHUB.frame.origin.x;
-        self.VIEWHUB_FRAME_Y = self.viewHUB.frame.origin.y;
-        self.VIEWHUB_FRAME_WIDTH = 480;
-        self.VIEWHUB_FRAME_HEIGHT = 320;
+        self.VIEWHUB_FRAME_X                = self.viewHUB.frame.origin.x;
+        self.VIEWHUB_FRAME_Y                = self.viewHUB.frame.origin.y;
         
-        self.SELF_ACTIVITY_FRAME_X = 0;
-        self.SELF_ACTIVITY_FRAME_Y = 0;
-        self.SELF_ACTIVITY_FRAME_WIDTH = 45;
-        self.SELF_ACTIVITY_FRAME_HEIGHT = 45;
+        self.VIEWHUB_FRAME_WIDTH            = 480;
+        self.VIEWHUB_FRAME_HEIGHT           = 320;
         
-        self.VIEWBACK_FRAME_X = 195;
-        self.VIEWBACK_FRAME_Y = 127.5;
-        self.VIEWBACK_FRAME_WIDTH = 90;
-        self.VIEWBACK_FRAME_HEIGHT =45;
+        self.SELF_ACTIVITY_FRAME_X          = 0;
+        self.SELF_ACTIVITY_FRAME_Y          = 0;
+        self.SELF_ACTIVITY_FRAME_WIDTH      = 45;
+        self.SELF_ACTIVITY_FRAME_HEIGHT     = 45;
         
-        self.LABELDATA_FRAME_X = 47.5+10.5;;
-        self.LABELDATA_FRAME_Y = 12.5;
-        self.LABELDATA_FRAME_WIDTH = 20;
-        self.LABELDATA_FRAME_HEIGHT =20; 
+        self.VIEWBACK_FRAME_X               = 195;
+        self.VIEWBACK_FRAME_Y               = 127.5;
+        self.VIEWBACK_FRAME_WIDTH           = 90;
+        self.VIEWBACK_FRAME_HEIGHT          = 45;
         
-        self.BACKBUTTON_FRAME_X = 45;
-        self.BACKBUTTON_FRAME_Y = 0;
-        self.BACKBUTTON_FRAME_WIDTH = 45; 
-        self.BACKBUTTON_FRAME_HEIGHT= 45;
+        self.LABELDATA_FRAME_X              = 47.5+10.5;
+        self.LABELDATA_FRAME_Y              = 12.5;
+        self.LABELDATA_FRAME_WIDTH          = 20;
+        self.LABELDATA_FRAME_HEIGHT         = 20; 
+        
+        self.BACKBUTTON_FRAME_X             = 45;
+        self.BACKBUTTON_FRAME_Y             = 0;
+        self.BACKBUTTON_FRAME_WIDTH         = 45; 
+        self.BACKBUTTON_FRAME_HEIGHT        = 45;
         
         upView  =YES;
+        
         [backgroundViews setHidden:YES];
         
-    }
-    else {
         
+        // self.tabBarController.tabBar.frame = CGRectMake(0,480, 480, 49);
+        
+        NSLog(@"%f",self.tabBarController.tabBar.frame.size.width);
+    }
+    if(interfaceOrientation == UIInterfaceOrientationPortrait || interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown){
+        
+        // self.tabBarController.tabBar.frame = CGRectMake(0,480-49,320, 49);
         upView =NO;
         backgroundViews.backgroundColor = [UIColor colorWithRed:20/255.0f green:20/255.0f blue:20/255.0f alpha:1.0f];
         [backgroundViews setHidden:NO];
@@ -2252,6 +2116,7 @@
         self.BACKBUTTON_FRAME_Y            = 0;
         self.BACKBUTTON_FRAME_WIDTH        = 45; 
         self.BACKBUTTON_FRAME_HEIGHT       = 45;
+        
         
     }
     

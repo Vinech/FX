@@ -571,7 +571,6 @@
 }
 
 #pragma mark-search
-
 -(void)searchContentText:(UIBarButtonItem *)sender
 {
     static BOOL isSearch;

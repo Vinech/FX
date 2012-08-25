@@ -8,7 +8,7 @@
 
 @protocol OptionViewControllerDelegate <NSObject>
 
--(void)popToRoot:(NSMutableArray *)theArray;
+-(void)popToRoot:(NSMutableArray *)theArray pointPhone:(int)pointPhone;
 
 @end
 
@@ -27,6 +27,57 @@
     UISwitch *switchs;
     UIBarButtonItem *barback;
     id<OptionViewControllerDelegate>delegate;
+    UITextField * tf;
+    UILabel *labeName;
+    UIView * aView;
+    UIScrollView * scrollView;
+    UIView *headerview;
+    UILabel *headerlabel;
+    UILabel *headerlabeldetia;
+    
+    int backviews_frame_origin_x;
+    int backviews_frame_origin_y;
+    int backviews_frame_size_width;
+    int backviews_frame_size_height;
+    
+    int text_frarm_origin_x;
+    int text_frarm_origin_y;
+    int text_frarm_size_width;
+    int text_frarm_size_height;
+    
+    int text_frarm_origin_x1;
+    int text_frarm_origin_y1;
+    int text_frarm_size_width1;
+    int text_frarm_size_height1;
+    
+    int text_frarm_origin_x2;
+    int text_frarm_origin_y2;
+    int text_frarm_size_width2;
+    int text_frarm_size_height2;
+    
+    
+    int label_frarm_origin_x;
+    int label_frarm_origin_y;
+    int label_frarm_size_width;
+    int label_frarm_size_height;
+    
+    int label_frarm_origin_x1;
+    int label_frarm_origin_y1;
+    int label_frarm_size_width1;
+    int label_frarm_size_height1;
+    
+    int label_frarm_origin_x2;
+    int label_frarm_origin_y2;
+    int label_frarm_size_width2;
+    int label_frarm_size_height2;
+    
+    int swichs_frame_origin_x;
+    int swichs_frame_origin_y;
+    int swichs_frame_size_width;
+    int swichs_frame_size_height;
+    
+    int pointPhone;
+    
 }
 @property(nonatomic,strong)id<OptionViewControllerDelegate>delegate;
 @property(nonatomic,strong)NSMutableArray * dataArray;

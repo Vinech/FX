@@ -275,6 +275,8 @@
         cell.label6.textColor=[UIColor whiteColor];
         cell.label7.textColor=[UIColor whiteColor];
         cell.backgroundColor=[UIColor colorWithRed:20/255.0f green:20/255.0f blue:20/255.0f alpha:1];
+        cell.contentView.backgroundColor=[UIColor colorWithRed:20/255.0f green:20/255.0f blue:20/255.0f alpha:1];
+
         
     }
     else {
@@ -285,8 +287,6 @@
         cell.label5.textColor=[UIColor blackColor];
         cell.label6.textColor=[UIColor blackColor];
         cell.label7.textColor=[UIColor blackColor];
-        
-        
         
     }
     

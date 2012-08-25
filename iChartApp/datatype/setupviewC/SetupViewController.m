@@ -313,16 +313,16 @@
         if (indexPath.row==0) {
             switch1 = [[UISwitch alloc] initWithFrame:rect_swich1];
             [cell.contentView addSubview:switch1];
-
+            
         }else {
             if (indexPath.row==1) {
                 switch2 = [[UISwitch alloc] initWithFrame:rect_swich2];
                 [cell.contentView addSubview:switch2];
             }
-
+            
         }
         
-         
+        
     }
     
     if ([styledangqian isEqualToString:@"dark"]) {
@@ -335,26 +335,26 @@
             cell.contentView.backgroundColor = [UIColor redColor];
             cell.textLabel.text=@"Log Out";
             cell.textLabel.textAlignment = UITextAlignmentCenter;
-//            switch1.backgroundColor=[UIColor whiteColor];
-//            switch2.backgroundColor=[UIColor whiteColor];
+            //            switch1.backgroundColor=[UIColor whiteColor];
+            //            switch2.backgroundColor=[UIColor whiteColor];
             
-
+            
         }else 
         {
             //            cell.backgroundColor = [UIColor blackColor];
             //            cell.textLabel.textColor = [UIColor whiteColor];
             //            cell.textLabel.text = [[array2 objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
             cell.textLabel.textAlignment = UITextAlignmentLeft;
-          //  cell.backgroundColor = [UIColor colorWithRed:20/225.0f green:20/225.0f blue:20/225.0f alpha:1];
+            //  cell.backgroundColor = [UIColor colorWithRed:20/225.0f green:20/225.0f blue:20/225.0f alpha:1];
             cell.textLabel.textColor = [UIColor whiteColor];
             cell.textLabel.text = [[array2 objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
             cell.contentView.backgroundColor = [UIColor blackColor];
             cell.contentView.layer.cornerRadius = 9;
             cell.backgroundColor=[UIColor clearColor];
-//            switch1.backgroundColor=[UIColor blackColor];
-//            switch2.backgroundColor=[UIColor blackColor];
+            //            switch1.backgroundColor=[UIColor blackColor];
+            //            switch2.backgroundColor=[UIColor blackColor];
             
-
+            
         }
         
         
@@ -443,7 +443,7 @@
 #pragma mark-登出
 -(void)logout{
     
-     NSLog(@"nihaologout");
+    NSLog(@"nihaologout");
     LoginViewController *aviewc=[[LoginViewController alloc]init];
     [self presentModalViewController:aviewc animated:NO];
     exit(0);
@@ -453,7 +453,7 @@
     if (alertview_call==alertview_call) {
         if (buttonIndex==1) {
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://02168600060"]]];
-
+            
         }
     }
 }
@@ -461,9 +461,11 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     NSLog(@"11111");
-
+    
     NSUserDefaults *user_hengshuping=[NSUserDefaults standardUserDefaults];
     NSString *string_hengshuping=[[NSString alloc]init];
+    NSString *string_bianhuanhengshu=[[NSString alloc]init];
+    
     if (interfaceOrientation==UIInterfaceOrientationLandscapeLeft||interfaceOrientation==UIInterfaceOrientationLandscapeRight) { 
         
         _myTableView.frame=CGRectMake(0, -5, 480, 320-44-49);
@@ -477,33 +479,42 @@
         rect_swich2=CGRectMake(380,5,50,30);
         
         string_hengshuping=@"hengping";
-        [user_hengshuping setObject:string_hengshuping forKey:@"hengshuping"];
+        [user_hengshuping setObject:string_bianhuanhengshu forKey:@"hengshuping"];
         [user_hengshuping synchronize];
-
+        
+        string_bianhuanhengshu=@"480";
+        [user_hengshuping setObject:string_bianhuanhengshu forKey:@"480"];
+        [user_hengshuping synchronize];
+        
+        
         
     } 
-      if (interfaceOrientation==UIInterfaceOrientationPortrait||interfaceOrientation==UIInterfaceOrientationPortraitUpsideDown) { 
+    if (interfaceOrientation==UIInterfaceOrientationPortrait||interfaceOrientation==UIInterfaceOrientationPortraitUpsideDown) { 
         count++;
         NSLog(@"count======%d",count);
-         _myTableView.frame=CGRectMake(0, -5, 320, 480-44-55);
+        _myTableView.frame=CGRectMake(0, -5, 320, 480-44-55);
         aView.frame=CGRectMake(0, 0, 320, 480);
         rect=CGRectMake(0, 0, 320, 480);
         rect_mytableview=CGRectMake(0, -5, 320, 480-44-55);
         imagehengshuping=[UIImage imageNamed:@"sign out(7).png"];
-          switch1.frame=CGRectMake(200,5,50,30);
-          rect_swich1=CGRectMake(200,5,50,30);
-          
-          switch2.frame=CGRectMake(200,5,50,30);
-          rect_swich2=CGRectMake(200,5,50,30);
-          string_hengshuping=@"shuping";
-          [user_hengshuping setObject:string_hengshuping forKey:@"hengshuping"];
-          [user_hengshuping synchronize];
-          
-
-
+        switch1.frame=CGRectMake(200,5,50,30);
+        rect_swich1=CGRectMake(200,5,50,30);
+        
+        switch2.frame=CGRectMake(200,5,50,30);
+        rect_swich2=CGRectMake(200,5,50,30);
+        string_hengshuping=@"shuping";
+        [user_hengshuping setObject:string_hengshuping forKey:@"hengshuping"];
+        [user_hengshuping synchronize];
+        
+        string_bianhuanhengshu=@"320";
+        [user_hengshuping setObject:string_bianhuanhengshu forKey:@"480"];
+        [user_hengshuping synchronize];
+        
+        
+        
     } 
     
-     return YES; 
+    return YES; 
 }
 
 
